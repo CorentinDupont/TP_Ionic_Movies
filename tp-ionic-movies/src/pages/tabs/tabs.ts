@@ -9,8 +9,8 @@ import { MovieListPage } from '../movie-list/movie-list';
 })
 export class TabsPage {
 
-  tab1Root = MovieListPage;
-  tab2Root = AboutPage;
+  tab1Root = AboutPage;
+  tab2Root = MovieListPage;
   tab3Root = ContactPage;
 
   constructor() {
