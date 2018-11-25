@@ -31,17 +31,17 @@ export class MovieGetterProvider {
             var movieRequest=this.httpClient.get('http://www.omdbapi.com/?i='+movieSimple.imdbID+'&plot=full&apikey=69335388')
             movieRequest.subscribe(data => {  
               var movie = new MovieComponent();
-              movie.poster = data.Poster;
-              movie.title = data.Title;
-              movie.year = data.Year;
-              movie.rated = data.Rated;
-              movie.released = data.Released;
-              movie.runtime = data.Runtime;
-              movie.director = data.Director;
-              movie.language = data.Language;
-              movie.country = data.Country;
-              movie.awards = data.Awards;
-              movie.production = data.Production;
+              movie.poster = data['Poster'];
+              movie.title = data['Title'];
+              movie.year = data['Year'];
+              movie.rated = data['Rated'];
+              movie.released = data['Released'];
+              movie.runtime = data['Runtime'];
+              movie.director = data['Director'];
+              movie.language = data['Language'];
+              movie.country = data['Country'];
+              movie.awards = data['Awards'];
+              movie.production = data['Production'];
 
               this.moviesList.push(movie);
               console.log(data); 
