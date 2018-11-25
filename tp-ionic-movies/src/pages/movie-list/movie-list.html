@@ -31,7 +31,7 @@
   <ion-list>
     <ion-item *ngFor="let movie of movieGetter.moviesList">
         <!--List movie -->
-        <ion-card>
+        <ion-card (click)="showMovie(movie)">
           <ion-card-content>
             <ion-grid>
               <ion-row>
@@ -44,15 +44,6 @@
                 <ion-col col-5>
                   <ion-list>
                     <ion-item>Year : {{movie.year}}</ion-item>
-                    <ion-item>Rated : {{movie.rated}}</ion-item>
-                    <ion-item>Released : {{movie.released}}</ion-item>
-                    <ion-item>Runtime : {{movie.runtime}}</ion-item>
-                    <ion-item>Genre : {{movie.genre}}</ion-item>
-                    <ion-item>Director : {{movie.director}}</ion-item>
-                    <ion-item>Language : {{movie.language}}</ion-item>
-                    <ion-item>Country : {{movie.country}}</ion-item>
-                    <ion-item>Awards : {{movie.awards}}</ion-item>
-                    <ion-item>Production : {{movie.production}}</ion-item>
                   </ion-list>
                 </ion-col>
               </ion-row>

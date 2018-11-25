@@ -10,6 +10,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MovieListPage } from '../pages/movie-list/movie-list';
+import { ShowMoviePage } from '../pages/show-movie/show-movie';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -26,6 +27,7 @@ import { IonicStorageModule } from '@ionic/storage';
     TabsPage,
     MovieListPage,
     MovieComponent,
+    ShowMoviePage,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,8 @@ import { IonicStorageModule } from '@ionic/storage';
     ContactPage,
     HomePage,
     TabsPage,
-    MovieListPage
+    MovieListPage,
+    ShowMoviePage,
   ],
   providers: [
     StatusBar,
