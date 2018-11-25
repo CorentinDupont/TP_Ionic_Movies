@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
 export class MovieComponent {
 
   public title: string;
-  public years: number;
+  public year: number;
   public rated: string;
   public released: string;
   public runtime: string;
