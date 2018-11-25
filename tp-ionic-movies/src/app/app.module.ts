@@ -10,12 +10,15 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MovieListPage } from '../pages/movie-list/movie-list';
+import { Pictures } from '../pages/pictures/pictures';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { MovieGetterProvider } from '../providers/movie-getter/movie-getter';
 import { MovieComponent } from '../components/movie/movie'; 
 import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from '@ionic-native/camera';
+
 
 @NgModule({
   declarations: [
@@ -26,6 +29,7 @@ import { IonicStorageModule } from '@ionic/storage';
     TabsPage,
     MovieListPage,
     MovieComponent,
+    Pictures
   ],
   imports: [
     BrowserModule,
@@ -41,13 +45,15 @@ import { IonicStorageModule } from '@ionic/storage';
     ContactPage,
     HomePage,
     TabsPage,
-    MovieListPage
+    MovieListPage,
+    Pictures
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MovieGetterProvider,
+    Camera
   ]
 })
 export class AppModule {}
