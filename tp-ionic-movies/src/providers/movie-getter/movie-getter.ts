@@ -17,18 +17,27 @@ export class MovieGetterProvider {
 
   constructor(public httpClient : HttpClient, private toastController: ToastController) {
     var i;
-    this.getMovies("blue");
+    this.getMovies("blue", 1);
   }
 
-  getMovies(searchString) {
+  getMovies(searchString, page, infiniteScroll = null) {
     this.moviesList=[];
-    var request = this.httpClient.get('http://www.omdbapi.com/?s='+searchString+'*&page=2&apikey=69335388')
+    this.addMovies(searchString, page, infiniteScroll = null);
+  }
+
+  addMovies(searchString, page, infiniteScroll = null){
+    let requestText = 'http://www.omdbapi.com/?s='+searchString+'*&page='+page+'&apikey=69335388';
+    var request = this.httpClient.get(requestText)
+    console.log(requestText);
     request.subscribe(
-      data => {  
-        console.log(data);
-        if('Search' in data){
+      (data: any) => {  
+        //console.log(data);
+        if(!!data.Search){
           data.Search.map((movieSimple) =>{
-            var movieRequest=this.httpClient.get('http://www.omdbapi.com/?i='+movieSimple.imdbID+'&plot=full&apikey=69335388')
+            let request = 'http://www.omdbapi.com/?i='+movieSimple.imdbID+'&plot=full&apikey=69335388';
+            var movieRequest=this.httpClient.get(request);
+
+
             movieRequest.subscribe(data => {  
               var movie = new MovieComponent();
               movie.poster = data['Poster'];
@@ -44,12 +53,15 @@ export class MovieGetterProvider {
               movie.production = data['Production'];
 
               this.moviesList.push(movie);
-              console.log(data); 
+              //console.log(data); 
             },
             err => console.error(err+" for "+movieSimple.Title),
             () => console.log('Movie' +movieSimple.Title +'Done')
           );
           })
+        }
+        if(infiniteScroll){
+          infiniteScroll.complete();
         }
       },
       err => console.error(err),

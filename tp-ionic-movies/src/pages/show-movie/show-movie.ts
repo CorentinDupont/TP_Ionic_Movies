@@ -20,5 +20,9 @@ export class ShowMoviePage {
     this.movie = navParams.get('movie');
   }
 
+  addToFavorite(movie: MovieComponent){
+    console.log("Add to favorite movie : ",movie.title);
+  }
+
 
 }

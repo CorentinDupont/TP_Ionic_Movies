@@ -29,27 +29,26 @@
     </ion-card>
   </span>
   <ion-list>
+
+      <!-- <ion-item *ngFor="let movie of movies">
+          <img src={{movie.Poster}}>
+          <button ion-item detail-push *ngFor="let movie of movies" (click)="goToDetailPage(movie)">
+            <h2>{{movie.Title}}</h2>
+          </button>
+        </ion-item> -->
     <ion-item *ngFor="let movie of movieGetter.moviesList">
         <!--List movie -->
         <ion-card (click)="showMovie(movie)">
+          <ion-card-title>
+            {{movie.title}}
+          </ion-card-title>
           <ion-card-content>
-            <ion-grid>
-              <ion-row>
-                <ion-col col-2>
-                  <img src={{movie.poster}}/>
-                </ion-col>
-                <ion-card-title>
-                  {{movie.title}}
-                </ion-card-title>
-                <ion-col col-5>
-                  <ion-list>
-                    <ion-item>Year : {{movie.year}}</ion-item>
-                  </ion-list>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
+            <img class="movie-poster" src={{movie.poster}}>
           </ion-card-content>
         </ion-card>
     </ion-item>
   </ion-list>
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)" >
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more movies..."></ion-infinite-scroll-content>
+ </ion-infinite-scroll>
 </ion-content>

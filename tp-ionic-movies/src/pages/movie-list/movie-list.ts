@@ -19,19 +19,30 @@ import { ShowMoviePage } from '../show-movie/show-movie';
 export class MovieListPage {
   private value = "";
   movieTitle = "";
+  private page = 1;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public movieGetter : MovieGetterProvider) {
   }
 
   onKey(event: any) { // without type info
+    this.page = 1;
     this.value = event.target.value;
-    this.movieGetter.getMovies(this.value);
+    this.movieGetter.getMovies(this.value, this.page);
   }
 
   showMovie(movie: MovieComponent){
       //console.log('click on '+movie.title);
-      this.navCtrl.push(ShowMoviePage, {movie:movie});
+      this.navCtrl.push(ShowMoviePage, {movie});
   }
+
+  doInfinite(infiniteScroll){
+    this.page +=1;
+    setTimeout(()=>{
+      this.movieGetter.addMovies(this.value, this.page, infiniteScroll);
+    }, 1000);
+  }
+
+  
   
 
 }
