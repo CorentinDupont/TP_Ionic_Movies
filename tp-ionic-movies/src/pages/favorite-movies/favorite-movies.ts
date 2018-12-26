@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MoviesServiceProvider } from '../../providers/movies-service/movies-service';
+import { ArrayType } from '@angular/compiler/src/output/output_ast';
+import { MovieComponent } from '../../components/movie/movie';
 
 /**
  * Generated class for the FavoriteMoviesPage page.
@@ -15,17 +17,36 @@ import { MoviesServiceProvider } from '../../providers/movies-service/movies-ser
   templateUrl: 'favorite-movies.html',
 })
 export class FavoriteMoviesPage {
+  
+  allFavoriteMovies = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider, public platform:Platform) {
+    
   }
+
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FavoriteMoviesPage');
+  }
+
+  ionViewDidEnter(){
+    console.log('ionViewDidEnter FavoriteMoviesPage');    
+    this.getAllFavoriteMovies();
 
   }
 
   getAllFavoriteMovies(){
-    return this.moviesServiceProvider.getAll();
+    console.log("try to get all favorite movies ...")
+    this.moviesServiceProvider.getAll()
+    .then((data) => {
+      // console.log(JSON.stringify(data));
+      this.allFavoriteMovies = data
+    })
+    .catch(error => {
+      console.log(error);
+      this.allFavoriteMovies = []
+    });
   }
 
 

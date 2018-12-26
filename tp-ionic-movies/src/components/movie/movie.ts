@@ -26,6 +26,7 @@ export class MovieComponent {
   public production: string;
   public poster: string;
 
-  constructor() {}
+  constructor() {
 
+  }
 }

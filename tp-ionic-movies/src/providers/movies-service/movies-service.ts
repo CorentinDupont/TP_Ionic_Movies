@@ -17,14 +17,24 @@ export class MoviesServiceProvider {
   // public methods
 
   setDatabase(db: SQLiteObject){
-    if(this.db === null){
+    console.log("Try to set db")
+    if(!this.db){
+      console.log("SET DATABASE")
       this.db = db;
     }
   }
 
   create(movie: MovieComponent){
-    let sql = 'INSERT INTO movies('+Object.keys(movie).join(', ')+') VALUES(?,?)';
-    return this.db.executeSql(sql, Object.keys(movie).map(key => movie[key]));
+    console.log("Creating movie ...")
+    let sql = 'INSERT INTO movies('+Object.keys(movie).join(', ')+') VALUES(?,?,?,?,?,?,?,?,?,?,?)';
+    const params = Object.keys(movie).map(key => movie[key]);
+    console.log(JSON.stringify(params));
+    this.db.executeSql(sql, params).then((result)=>{
+      console.log("Movie successfully inserted ! ", JSON.stringify(result));
+    })
+    .catch(error => {
+      console.log(error);
+    });
 
   }
 
@@ -44,8 +54,14 @@ export class MoviesServiceProvider {
       'poster TEXT',
     ];
     
-    let sql = 'CREATE TABLE IF NOT EXISTS movies(id INTEGER PRIMARY KEY AUTOINCREMENT,'+movieArguments.join(', ')+')';
-    return this.db.executeSql(sql, []);
+    let sql = 'CREATE TABLE IF NOT EXISTS movies(id INTEGER PRIMARY KEY AUTOINCREMENT, '+movieArguments.join(', ')+')';
+    console.log("creating movies data table ...")
+    this.db.executeSql(sql, [])
+    .then(() => {
+      console.log('movies data table created !')
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   delete(movie: any){
@@ -55,20 +71,51 @@ export class MoviesServiceProvider {
 
   getAll(){
     let sql = 'SELECT * FROM movies';
-    return this.db.executeSql(sql, [])
-    .then(response => {
-      const movies = response.rows.map((row)=>{
-        return row.item();
-      });
-      return Promise.resolve( movies );
-    })
-    .catch(error => Promise.reject(error));
+      return new Promise((resolve, reject) => {
+        console.log("enter in promise")
+
+        this.db.executeSql(sql, [])
+        .then(response => {
+          console.log("response !!!", JSON.stringify(response))
+
+          // Get movies array from response
+          let movies = [];
+          for(let i=0; i<response.rows.length; i++) {
+            const obj = response.rows.item(i);
+            movies.push(this.makeMovie(obj));
+          }
+          console.log("GET ALL movies from service : ", movies);
+          resolve( movies );
+        })
+        .catch(error => reject(error));
+      })
+    
   }
 
   update(movie: MovieComponent){
     let updateArguments = Object.keys(movie).splice(Object.keys(movie).indexOf('id'), 1).join('=?, ')+'=? ';
     let sql = 'UPDATE movies SET'+updateArguments+'WHERE id=?';
     return this.db.executeSql(sql,Object.keys(movie).map(key => movie[key]));
+  }
+
+  makeMovie(data){
+    let movie: MovieComponent = new MovieComponent();
+
+    movie.id = data.id;
+    movie.title = data.title;
+    movie.year = data.year;
+    movie.rated = data.rated;
+    movie.released = data.released;
+    movie.runtime = data.runtime;
+    movie.genre = data.genre;
+    movie.director = data.director;
+    movie.language = data.language;
+    movie.country = data.country;
+    movie.awards = data.awards;
+    movie.production = data.production;
+    movie.poster = data.poster;
+
+    return movie;
   }
 
 }

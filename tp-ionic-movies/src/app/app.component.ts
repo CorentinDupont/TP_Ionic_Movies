@@ -12,25 +12,32 @@ import { MoviesServiceProvider } from '../providers/movies-service/movies-servic
 export class MyApp {
   rootPage:any = TabsPage;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public sqlite: SQLite, public moviesServiceProvider: MoviesServiceProvider,) {
-    platform.ready().then(() => {
+  constructor(public platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, public sqlite: SQLite, public moviesServiceProvider: MoviesServiceProvider,) {
+      console.log("Platfomr don't ready bu i don't care")
+
+    this.platform.ready().then((readySource) => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      console.log('Platform ready from', readySource);
+
       statusBar.styleDefault();
       splashScreen.hide();
       this.createDatabase();
+
     });
+
   }
 
   private createDatabase(){
+    console.log("Creating database ...")
     this.sqlite.create({
       name: 'data.db',
       location: 'default' // the location field is required
     })
     .then((db) => {
-      console.log(db);
+      console.log("created database : ", db);
       this.moviesServiceProvider.setDatabase(db);
-      return this.moviesServiceProvider.createTable();
+      this.moviesServiceProvider.createTable();
     })
     .catch(error =>{
       console.error(error);
