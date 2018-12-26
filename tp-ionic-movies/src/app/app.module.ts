@@ -19,6 +19,9 @@ import { MovieGetterProvider } from '../providers/movie-getter/movie-getter';
 import { MovieComponent } from '../components/movie/movie'; 
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
+import { SQLite } from '@ionic-native/sqlite';
+import { MoviesServiceProvider } from '../providers/movies-service/movies-service';
+import { FavoriteMoviesPage } from '../pages/favorite-movies/favorite-movies';
 
 
 @NgModule({
@@ -31,7 +34,8 @@ import { Camera } from '@ionic-native/camera';
     MovieListPage,
     MovieComponent,
     ShowMoviePage,
-    Pictures
+    Pictures,
+    FavoriteMoviesPage
   ],
   imports: [
     BrowserModule,
@@ -49,14 +53,17 @@ import { Camera } from '@ionic-native/camera';
     TabsPage,
     MovieListPage,
     ShowMoviePage,
-    Pictures
+    Pictures,
+    FavoriteMoviesPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MovieGetterProvider,
-    Camera
+    Camera,
+    SQLite,
+    MoviesServiceProvider
   ]
 })
 export class AppModule {}

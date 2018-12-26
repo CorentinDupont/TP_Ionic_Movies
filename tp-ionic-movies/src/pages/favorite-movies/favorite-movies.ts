@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { MovieComponent } from '../../components/movie/movie';
 import { MoviesServiceProvider } from '../../providers/movies-service/movies-service';
 
 /**
- * Generated class for the ShowMoviePage page.
+ * Generated class for the FavoriteMoviesPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -12,18 +11,21 @@ import { MoviesServiceProvider } from '../../providers/movies-service/movies-ser
 
 @IonicPage()
 @Component({
-  selector: 'page-show-movie',
-  templateUrl: 'show-movie.html',
+  selector: 'page-favorite-movies',
+  templateUrl: 'favorite-movies.html',
 })
-export class ShowMoviePage {
-  public movie: MovieComponent;
+export class FavoriteMoviesPage {
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider) {
-    this.movie = navParams.get('movie');
   }
 
-  addToFavorite(movie: MovieComponent){
-    console.log("Add to favorite movie : ",movie.title);
-    this.moviesServiceProvider.create(movie);
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad FavoriteMoviesPage');
+
+  }
+
+  getAllFavoriteMovies(){
+    return this.moviesServiceProvider.getAll();
   }
 
 

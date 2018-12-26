@@ -12,6 +12,7 @@ import { Component } from '@angular/core';
 })
 export class MovieComponent {
 
+  public id: number;
   public title: string;
   public year: number;
   public rated: string;
