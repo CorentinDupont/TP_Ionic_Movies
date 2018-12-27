@@ -5,26 +5,16 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
     <ion-title>FavoriteMovies</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let movie of allFavoriteMovies">
-        <!--List movie -->
-        <ion-card>
-          <ion-card-title>
-            {{movie.title}}
-          </ion-card-title>
-          <ion-card-content>
-            <img class="movie-poster" src={{movie.poster}}>
-          </ion-card-content>
-        </ion-card>
+      <fav-movie-card [movie]="movie"></fav-movie-card>
     </ion-item>
   </ion-list>
 </ion-content>

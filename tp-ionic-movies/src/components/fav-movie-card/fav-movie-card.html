@@ -1,0 +1,13 @@
+<!-- Generated template for the FavMovieCardComponent component -->
+  <!--List movie -->
+  <ion-card>
+    <ion-card-title class="fav-movie-card-header">
+      {{movie.title}}
+      <button ion-button clear icon-only (click)="presentActionSheet()"  >
+        <ion-icon name="options" color="lightgrey"></ion-icon>
+      </button>
+    </ion-card-title>
+    <ion-card-content>
+      <img class="movie-poster" src={{movie.poster}}>
+    </ion-card-content>
+  </ion-card>

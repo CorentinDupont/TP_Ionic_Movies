@@ -22,6 +22,8 @@ import { Camera } from '@ionic-native/camera';
 import { SQLite } from '@ionic-native/sqlite';
 import { MoviesServiceProvider } from '../providers/movies-service/movies-service';
 import { FavoriteMoviesPage } from '../pages/favorite-movies/favorite-movies';
+import { FavMovieCardComponent } from '../components/fav-movie-card/fav-movie-card'
+
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { FavoriteMoviesPage } from '../pages/favorite-movies/favorite-movies';
     MovieComponent,
     ShowMoviePage,
     Pictures,
-    FavoriteMoviesPage
+    FavoriteMoviesPage,
+    FavMovieCardComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { FavoriteMoviesPage } from '../pages/favorite-movies/favorite-movies';
     MovieListPage,
     ShowMoviePage,
     Pictures,
-    FavoriteMoviesPage
+    FavoriteMoviesPage,
+    FavMovieCardComponent
   ],
   providers: [
     StatusBar,

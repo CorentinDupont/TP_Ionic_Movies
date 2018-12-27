@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MoviesServiceProvider } from '../../providers/movies-service/movies-service';
 import { ArrayType } from '@angular/compiler/src/output/output_ast';
 import { MovieComponent } from '../../components/movie/movie';
+import { Events } from 'ionic-angular';
 
 /**
  * Generated class for the FavoriteMoviesPage page.
@@ -18,10 +19,12 @@ import { MovieComponent } from '../../components/movie/movie';
 })
 export class FavoriteMoviesPage {
   
-  allFavoriteMovies = [];
+  allFavoriteMovies = null;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider, public platform:Platform) {
-    
+  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider, public platform:Platform, public events: Events) {
+    events.subscribe('movies:refreshFavoriteMovies', () => {
+      this.getAllFavoriteMovies();
+    })
   }
 
   
@@ -40,7 +43,6 @@ export class FavoriteMoviesPage {
     console.log("try to get all favorite movies ...")
     this.moviesServiceProvider.getAll()
     .then((data) => {
-      // console.log(JSON.stringify(data));
       this.allFavoriteMovies = data
     })
     .catch(error => {
