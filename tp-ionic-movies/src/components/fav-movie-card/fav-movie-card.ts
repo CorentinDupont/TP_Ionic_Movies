@@ -46,4 +46,7 @@ export class FavMovieCardComponent {
     this.events.publish('movies:refreshFavoriteMovies');
   }
 
+  callShowMovie(movie: MovieComponent){
+    this.events.publish('movies:showMovie', movie);
+  }
 }

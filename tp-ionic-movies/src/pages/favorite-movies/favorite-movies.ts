@@ -4,6 +4,8 @@ import { MoviesServiceProvider } from '../../providers/movies-service/movies-ser
 import { ArrayType } from '@angular/compiler/src/output/output_ast';
 import { MovieComponent } from '../../components/movie/movie';
 import { Events } from 'ionic-angular';
+import { ShowMoviePage } from '../show-movie/show-movie';
+
 
 /**
  * Generated class for the FavoriteMoviesPage page.
@@ -24,6 +26,9 @@ export class FavoriteMoviesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider, public platform:Platform, public events: Events) {
     events.subscribe('movies:refreshFavoriteMovies', () => {
       this.getAllFavoriteMovies();
+    })
+    events.subscribe('movies:showMovie', (movie: MovieComponent) => {
+      this.showMovie(movie);
     })
   }
 
@@ -50,6 +55,11 @@ export class FavoriteMoviesPage {
       this.allFavoriteMovies = []
     });
   }
+
+  showMovie(movie: MovieComponent){
+    //console.log('click on '+movie.title);
+    this.navCtrl.push(ShowMoviePage, {movie});
+}
 
 
 }
