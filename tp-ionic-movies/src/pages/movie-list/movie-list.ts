@@ -33,7 +33,7 @@ export class MovieListPage {
 
   showMovie(movie: MovieComponent){
       //console.log('click on '+movie.title);
-      this.navCtrl.push(ShowMoviePage, {movie});
+      this.navCtrl.push(ShowMoviePage, {movie, isAFavMovie:false});
   }
 
   doInfinite(infiniteScroll){

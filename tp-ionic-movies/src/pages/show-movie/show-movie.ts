@@ -16,14 +16,23 @@ import { MoviesServiceProvider } from '../../providers/movies-service/movies-ser
   templateUrl: 'show-movie.html',
 })
 export class ShowMoviePage {
+
   public movie: MovieComponent;
+  public isAFavMovie: boolean;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider) {
     this.movie = navParams.get('movie');
+    this.isAFavMovie = navParams.get('isAFavMovie');
   }
 
   addToFavorite(movie: MovieComponent){
     console.log("Add to favorite movie : ",movie.title);
     this.moviesServiceProvider.create(movie);
+  }
+
+  removeFromFavorite(movie: MovieComponent){
+    this.moviesServiceProvider.delete(movie);
+    this.navCtrl.pop();
   }
 
 
