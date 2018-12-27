@@ -39,13 +39,13 @@
 
     <!-- Button add to favorite -->
     <ng-template #aFavMovie>
-      <button ion-button icon-start (click)="addToFavorite(movie)">
+      <button [disabled]="addToFavoriteButtonIsDisabled" ion-button icon-start (click)="addToFavorite(movie)">
         <ion-icon name="heart"></ion-icon>
         Ajouter aux favoris
       </button>
     </ng-template>
     
-
+    <!-- Button remove from favorite -->
     <ng-template #notAFavMovie>
       <button ion-button icon-start color="danger" (click)="removeFromFavorite(movie)">
         <ion-icon name="trash"></ion-icon>

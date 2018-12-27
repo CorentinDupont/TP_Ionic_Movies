@@ -19,20 +19,39 @@ export class ShowMoviePage {
 
   public movie: MovieComponent;
   public isAFavMovie: boolean;
+  public addToFavoriteButtonIsDisabled: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider) {
     this.movie = navParams.get('movie');
     this.isAFavMovie = navParams.get('isAFavMovie');
   }
 
+  ionViewDidEnter(){
+    // test if it's not a fav movie when user came from search movie list
+    !this.isAFavMovie && this.testIfMovieIsAlreadyInFavorite(this.movie);
+  }
+
   addToFavorite(movie: MovieComponent){
     console.log("Add to favorite movie : ",movie.title);
     this.moviesServiceProvider.create(movie);
+    this.addToFavoriteButtonIsDisabled = true;
   }
 
   removeFromFavorite(movie: MovieComponent){
     this.moviesServiceProvider.delete(movie);
+    this.isAFavMovie = false;
     this.navCtrl.pop();
+  }
+
+  private testIfMovieIsAlreadyInFavorite(movie: MovieComponent){
+    this.moviesServiceProvider.selectByTitle(movie.title)
+    .then((data) => {
+      console.log(data);
+      if(data.length){
+        this.addToFavoriteButtonIsDisabled = true;
+      }
+    })
+    .catch(error => {console.log(error)});
   }
 
 

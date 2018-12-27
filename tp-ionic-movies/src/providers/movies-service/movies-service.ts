@@ -64,6 +64,32 @@ export class MoviesServiceProvider {
     });
   }
 
+  selectByTitle(title: String){
+    let sql = 'SELECT * FROM movies WHERE title=?'
+
+    return new Promise((resolve, reject) => {
+      console.log("MOVIES : select by title : enter in promise")
+      this.db.executeSql(sql, [title])
+      .then((response) => {
+        console.log("MOVIES : select by title : response !!", JSON.stringify(response))
+
+        // Get movies array from response
+        let movies:MovieComponent[] = [];
+        for(let i=0; i<response.rows.length; i++) {
+          const obj = response.rows.item(i);
+          movies.push(this.makeMovie(obj));
+        }
+        console.log("GET ALL movies from service : ", movies);
+        resolve(movies);
+
+      })
+      .catch(error => {
+        console.log("MOVIES : select by title : ERROR", JSON.stringify(error));
+        reject(error)
+      })
+    })
+  }
+
   delete(movie: any){
     let sql = 'DELETE FROM movies WHERE id=?';
     return this.db.executeSql(sql, [movie.id]);
@@ -117,5 +143,7 @@ export class MoviesServiceProvider {
 
     return movie;
   }
+
+
 
 }
