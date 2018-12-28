@@ -29,13 +29,6 @@
     </ion-card>
   </span>
   <ion-list>
-
-      <!-- <ion-item *ngFor="let movie of movies">
-          <img src={{movie.Poster}}>
-          <button ion-item detail-push *ngFor="let movie of movies" (click)="goToDetailPage(movie)">
-            <h2>{{movie.Title}}</h2>
-          </button>
-        </ion-item> -->
     <ion-item *ngFor="let movie of movieGetter.moviesList">
         <!--List movie -->
         <ion-card (click)="showMovie(movie)">

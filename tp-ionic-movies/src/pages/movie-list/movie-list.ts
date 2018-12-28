@@ -22,6 +22,7 @@ export class MovieListPage {
   private page = 1;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public movieGetter : MovieGetterProvider) {
+  
   }
 
   onKey(event: any) { // without type info
@@ -32,7 +33,7 @@ export class MovieListPage {
 
   showMovie(movie: MovieComponent){
       //console.log('click on '+movie.title);
-      this.navCtrl.push(ShowMoviePage, {movie});
+      this.navCtrl.push(ShowMoviePage, {movie, isAFavMovie:false});
   }
 
   doInfinite(infiniteScroll){

@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { QRCodeModule } from 'angularx-qrcode';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -19,6 +18,14 @@ import { MovieGetterProvider } from '../providers/movie-getter/movie-getter';
 import { MovieComponent } from '../components/movie/movie'; 
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
+import { SQLite } from '@ionic-native/sqlite';
+import { MoviesServiceProvider } from '../providers/movies-service/movies-service';
+import { FavoriteMoviesPage } from '../pages/favorite-movies/favorite-movies';
+import { FavMovieCardComponent } from '../components/fav-movie-card/fav-movie-card'
+
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+
 
 
 @NgModule({
@@ -31,14 +38,17 @@ import { Camera } from '@ionic-native/camera';
     MovieListPage,
     MovieComponent,
     ShowMoviePage,
-    Pictures
+    Pictures,
+    FavoriteMoviesPage,
+    FavMovieCardComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    QRCodeModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    NgxQRCodeModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -49,14 +59,19 @@ import { Camera } from '@ionic-native/camera';
     TabsPage,
     MovieListPage,
     ShowMoviePage,
-    Pictures
+    Pictures,
+    FavoriteMoviesPage,
+    FavMovieCardComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     MovieGetterProvider,
-    Camera
+    Camera,
+    SQLite,
+    MoviesServiceProvider,
+    BarcodeScanner
   ]
 })
 export class AppModule {}
