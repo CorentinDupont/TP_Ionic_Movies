@@ -48,7 +48,7 @@ export class ShowMoviePage {
   }
 
   private testIfMovieIsAlreadyInFavorite(movie: MovieComponent){
-    this.moviesServiceProvider.selectByTitle(movie.title)
+    this.moviesServiceProvider.select(movie.imdbId)
     .then((data) => {
       console.log(data);
       if(data.length){

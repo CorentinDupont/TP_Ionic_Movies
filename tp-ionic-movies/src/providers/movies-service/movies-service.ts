@@ -40,6 +40,7 @@ export class MoviesServiceProvider {
 
   createTable(){
     const movieArguments = [
+      'imdbId TEXT',
       'title TEXT',
       'year NUMBER',
       'rated TEXT',
@@ -64,12 +65,12 @@ export class MoviesServiceProvider {
     });
   }
 
-  selectByTitle(title: String){
-    let sql = 'SELECT * FROM movies WHERE title=?'
+  select(imdbId: string){
+    let sql = 'SELECT * FROM movies WHERE imdbId=?'
 
     return new Promise<MovieComponent[]>((resolve, reject) => {
       console.log("MOVIES : select by title : enter in promise")
-      this.db.executeSql(sql, [title])
+      this.db.executeSql(sql, [imdbId])
       .then((response) => {
         console.log("MOVIES : select by title : response !!", JSON.stringify(response))
 
@@ -91,9 +92,9 @@ export class MoviesServiceProvider {
   }
 
   delete(movie: MovieComponent){
-    let sql = 'DELETE FROM movies WHERE title=?';
+    let sql = 'DELETE FROM movies WHERE imdbId=?';
     console.log('try to delete movie from database', JSON.stringify(movie))
-    this.db.executeSql(sql, [movie.title]).then(result => {
+    this.db.executeSql(sql, [movie.imdbId]).then(result => {
       console.log("movie successfully deleted from database !", JSON.stringify(result))
     }).catch(error => {console.log("error : ", JSON.stringify(error))});
   }
@@ -134,6 +135,7 @@ export class MoviesServiceProvider {
       movie.id = data.id;
       console.log("i put the id bro");
     }
+    movie.imdbId = data.imdbId;
     movie.title = data.title;
     movie.year = data.year;
     movie.rated = data.rated;

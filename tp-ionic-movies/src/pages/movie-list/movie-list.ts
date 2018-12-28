@@ -47,13 +47,29 @@ export class MovieListPage {
 
   scanCode() {
     this.barcodeScanner.scan().then(barcodeData => {
-      const scannedMovie = this.moviesServiceProvider.makeMovie(JSON.parse(barcodeData.text), true);
+      console.log("QR CODE SCANNER : get some data");
+      try {
+        const scannedJson = JSON.parse(barcodeData.text);
+        console.log("QR CODE SCANNER : scannedJson", JSON.stringify(scannedJson));
 
-      console.log("SCANNED MOVIE :", JSON.stringify(scannedMovie));
+        if(scannedJson.hasOwnProperty("imdbId")){
+          console.log("QR CODE SCANNER : scannedJson has property imdbId")
+          this.movieGetter.getOneMovie(scannedJson.imdbId).then((movie:MovieComponent)=>{
+            console.log("SCANNED MOVIE :", JSON.stringify(movie));
+            this.navCtrl.push(ShowMoviePage, {movie, isAFavMovie:false});
+          })
+        }else{
+          console.log("This was not a movie !")
+        }
+        
+      } catch (error) {
+        console.log(error);
+        console.log("This was not a movie !")
+      }
+     
+      // the following code is usefull for adding movie directly in favorite.
 
-        this.navCtrl.push(ShowMoviePage, {movie:scannedMovie, isAFavMovie:false});
-
-      //Test if this movie is 
+      //Test if this movie is a fav movie
       // this.isAFavMovie(scannedMovie).then((isAFavMovie) => {
       //   if(!isAFavMovie){
       //     // add movie in favorite (in db)
@@ -63,6 +79,7 @@ export class MovieListPage {
       //     console.log("this scanned movie is already is your favovrite !")
       //   }
       // }).catch(error => {console.log(error)});
+
     }, (err) => {
         console.log('Error: ', err);
     });
