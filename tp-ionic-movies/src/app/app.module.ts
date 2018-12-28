@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { QRCodeModule } from 'angularx-qrcode';
 
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
@@ -23,6 +22,9 @@ import { SQLite } from '@ionic-native/sqlite';
 import { MoviesServiceProvider } from '../providers/movies-service/movies-service';
 import { FavoriteMoviesPage } from '../pages/favorite-movies/favorite-movies';
 import { FavMovieCardComponent } from '../components/fav-movie-card/fav-movie-card'
+
+import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
 
@@ -44,8 +46,9 @@ import { FavMovieCardComponent } from '../components/fav-movie-card/fav-movie-ca
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
-    QRCodeModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    NgxQRCodeModule,
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -67,7 +70,8 @@ import { FavMovieCardComponent } from '../components/fav-movie-card/fav-movie-ca
     MovieGetterProvider,
     Camera,
     SQLite,
-    MoviesServiceProvider
+    MoviesServiceProvider,
+    BarcodeScanner
   ]
 })
 export class AppModule {}

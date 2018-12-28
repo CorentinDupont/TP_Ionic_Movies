@@ -20,6 +20,7 @@ export class ShowMoviePage {
   public movie: MovieComponent;
   public isAFavMovie: boolean;
   public addToFavoriteButtonIsDisabled: boolean = false;
+  public createdCode: String;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider) {
     this.movie = navParams.get('movie');
@@ -29,6 +30,7 @@ export class ShowMoviePage {
   ionViewDidEnter(){
     // test if it's not a fav movie when user came from search movie list
     !this.isAFavMovie && this.testIfMovieIsAlreadyInFavorite(this.movie);
+    this.createCode(this.movie);
   }
 
   addToFavorite(movie: MovieComponent){
@@ -52,6 +54,11 @@ export class ShowMoviePage {
       }
     })
     .catch(error => {console.log(error)});
+  }
+
+  createCode(movie: MovieComponent) {
+    movie.id && delete movie.id
+    this.createdCode = JSON.stringify(movie);
   }
 
 

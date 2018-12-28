@@ -67,7 +67,7 @@ export class MoviesServiceProvider {
   selectByTitle(title: String){
     let sql = 'SELECT * FROM movies WHERE title=?'
 
-    return new Promise((resolve, reject) => {
+    return new Promise<MovieComponent[]>((resolve, reject) => {
       console.log("MOVIES : select by title : enter in promise")
       this.db.executeSql(sql, [title])
       .then((response) => {
