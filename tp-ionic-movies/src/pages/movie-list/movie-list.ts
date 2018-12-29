@@ -87,7 +87,7 @@ export class MovieListPage {
 
   isAFavMovie(movie: MovieComponent): Promise<boolean>{
     return new Promise<boolean>((resolve, reject)=>{
-      this.moviesServiceProvider.selectByTitle(movie.title)
+      this.moviesServiceProvider.select(movie.imdbId)
       .then((data) => {
         console.log(data);
         resolve(!!data.length);
