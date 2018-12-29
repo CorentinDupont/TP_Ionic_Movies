@@ -48,6 +48,8 @@ export class FavoriteMoviesPage {
     console.log("try to get all favorite movies ...")
     this.moviesServiceProvider.getAll()
     .then((data) => {
+      console.log("WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
+      console.log(JSON.stringify(data))
       this.allFavoriteMovies = data
     })
     .catch(error => {
@@ -57,7 +59,7 @@ export class FavoriteMoviesPage {
   }
 
   showMovie(movie: MovieComponent){
-    //console.log('click on '+movie.title);
+    console.log('click on '+ JSON.stringify(movie));
     this.navCtrl.push(ShowMoviePage, {movie, isAFavMovie:true});
 }
 

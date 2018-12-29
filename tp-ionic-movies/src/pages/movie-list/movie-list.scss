@@ -3,4 +3,11 @@ page-movie-list {
         width:300px;
         height:445px;
     }
+
+    .search-bar-block{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        
+    }
 }

@@ -13,6 +13,7 @@ import { Component } from '@angular/core';
 export class MovieComponent {
 
   public id: number;
+  public imdbId: string;
   public title: string;
   public year: number;
   public rated: string;
@@ -28,5 +29,14 @@ export class MovieComponent {
 
   constructor() {
 
+  }
+
+  public static isCorrect(jsonObj){
+    // use after scanning qr code
+      return(
+        jsonObj.hasOwnProperty("title")
+        && jsonObj.hasOwnProperty("year")
+        && jsonObj.hasOwnProperty("runtime")
+      )
   }
 }

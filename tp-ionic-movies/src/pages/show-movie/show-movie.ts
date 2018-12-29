@@ -23,6 +23,7 @@ export class ShowMoviePage {
   public createdCode: String;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider) {
+    // here, get the movie with id
     this.movie = navParams.get('movie');
     this.isAFavMovie = navParams.get('isAFavMovie');
   }
@@ -40,13 +41,14 @@ export class ShowMoviePage {
   }
 
   removeFromFavorite(movie: MovieComponent){
+    // strangely, the id of the movie disappear from the start, so movie is delete by title
     this.moviesServiceProvider.delete(movie);
     this.isAFavMovie = false;
     this.navCtrl.pop();
   }
 
   private testIfMovieIsAlreadyInFavorite(movie: MovieComponent){
-    this.moviesServiceProvider.selectByTitle(movie.title)
+    this.moviesServiceProvider.select(movie.imdbId)
     .then((data) => {
       console.log(data);
       if(data.length){

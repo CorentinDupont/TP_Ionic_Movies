@@ -26,20 +26,21 @@ export class MoviesServiceProvider {
 
   create(movie: MovieComponent){
     console.log("Creating movie ...")
-    let sql = 'INSERT INTO movies('+Object.keys(movie).join(', ')+') VALUES(?,?,?,?,?,?,?,?,?,?,?)';
-    const params = Object.keys(movie).map(key => movie[key]);
-    console.log(JSON.stringify(params));
+    let sql = 'INSERT INTO movies('+Object.keys(movie).join(', ')+') VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
+    let params = Object.keys(movie).map(key => movie[key]);
+    console.log("PARAMS : ", JSON.stringify(params));
     this.db.executeSql(sql, params).then((result)=>{
       console.log("Movie successfully inserted ! ", JSON.stringify(result));
     })
     .catch(error => {
-      console.log(error);
+      console.log(JSON.stringify(error));
     });
 
   }
 
   createTable(){
     const movieArguments = [
+      'imdbId TEXT',
       'title TEXT',
       'year NUMBER',
       'rated TEXT',
@@ -64,12 +65,12 @@ export class MoviesServiceProvider {
     });
   }
 
-  selectByTitle(title: String){
-    let sql = 'SELECT * FROM movies WHERE title=?'
+  select(imdbId: string){
+    let sql = 'SELECT * FROM movies WHERE imdbId=?'
 
     return new Promise<MovieComponent[]>((resolve, reject) => {
       console.log("MOVIES : select by title : enter in promise")
-      this.db.executeSql(sql, [title])
+      this.db.executeSql(sql, [imdbId])
       .then((response) => {
         console.log("MOVIES : select by title : response !!", JSON.stringify(response))
 
@@ -77,7 +78,7 @@ export class MoviesServiceProvider {
         let movies:MovieComponent[] = [];
         for(let i=0; i<response.rows.length; i++) {
           const obj = response.rows.item(i);
-          movies.push(this.makeMovie(obj));
+          movies.push(this.makeMovie(obj, false));
         }
         console.log("GET ALL movies from service : ", movies);
         resolve(movies);
@@ -90,9 +91,12 @@ export class MoviesServiceProvider {
     })
   }
 
-  delete(movie: any){
-    let sql = 'DELETE FROM movies WHERE id=?';
-    return this.db.executeSql(sql, [movie.id]);
+  delete(movie: MovieComponent){
+    let sql = 'DELETE FROM movies WHERE imdbId=?';
+    console.log('try to delete movie from database', JSON.stringify(movie))
+    this.db.executeSql(sql, [movie.imdbId]).then(result => {
+      console.log("movie successfully deleted from database !", JSON.stringify(result))
+    }).catch(error => {console.log("error : ", JSON.stringify(error))});
   }
 
   getAll(){
@@ -108,9 +112,9 @@ export class MoviesServiceProvider {
           let movies = [];
           for(let i=0; i<response.rows.length; i++) {
             const obj = response.rows.item(i);
-            movies.push(this.makeMovie(obj));
+            movies.push(this.makeMovie(obj, false));
           }
-          console.log("GET ALL movies from service : ", movies);
+          console.log("GET ALL movies from service : ", JSON.stringify(movies));
           resolve( movies );
         })
         .catch(error => reject(error));
@@ -124,10 +128,14 @@ export class MoviesServiceProvider {
     return this.db.executeSql(sql,Object.keys(movie).map(key => movie[key]));
   }
 
-  makeMovie(data){
+  makeMovie(data, withoutId:boolean){
     let movie: MovieComponent = new MovieComponent();
 
-    movie.id = data.id;
+    if(!withoutId){
+      movie.id = data.id;
+      console.log("i put the id bro");
+    }
+    movie.imdbId = data.imdbId;
     movie.title = data.title;
     movie.year = data.year;
     movie.rated = data.rated;

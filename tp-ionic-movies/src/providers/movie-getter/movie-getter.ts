@@ -40,6 +40,7 @@ export class MovieGetterProvider {
 
             movieRequest.subscribe(data => {  
               var movie = new MovieComponent();
+              movie.imdbId = data["imdbID"];
               movie.poster = data['Poster'];
               movie.title = data['Title'];
               movie.year = data['Year'];
@@ -67,6 +68,40 @@ export class MovieGetterProvider {
       err => console.error(err),
       () => console.log('Movie Done')
     );
+  }
+
+  getOneMovie(imdbId:string){
+
+    return new Promise<MovieComponent>((resolve, reject) => {
+      let request = 'http://www.omdbapi.com/?i='+imdbId+'&plot=full&apikey=69335388';
+      var movieRequest=this.httpClient.get(request);
+  
+      movieRequest.subscribe(data => {
+        let movie = new MovieComponent();
+        movie.imdbId = data["imdbID"];
+        movie.poster = data['Poster'];
+        movie.title = data['Title'];
+        movie.year = data['Year'];
+        movie.rated = data['Rated'];
+        movie.released = data['Released'];
+        movie.runtime = data['Runtime'];
+        movie.director = data['Director'];
+        movie.language = data['Language'];
+        movie.country = data['Country'];
+        movie.awards = data['Awards'];
+        movie.production = data['Production'];
+        resolve(movie)
+      },
+      err => {
+        reject(err);
+        console.error(JSON.stringify(err))
+      },
+      () => {
+        console.log('One Movie request Done')
+      }
+      );
+    })
+   
   }
 
 }
