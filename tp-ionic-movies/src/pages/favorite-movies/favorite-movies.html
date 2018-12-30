@@ -6,15 +6,17 @@
 -->
 <ion-header>
   <ion-navbar>
-    <ion-title>FavoriteMovies</ion-title>
+    <ion-title>Mes favoris</ion-title>
   </ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let movie of allFavoriteMovies">
-      <fav-movie-card [movie]="movie"></fav-movie-card>
-    </ion-item>
-  </ion-list>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6 *ngFor="let movie of allFavoriteMovies">
+        <fav-movie-card [movie]="movie"></fav-movie-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

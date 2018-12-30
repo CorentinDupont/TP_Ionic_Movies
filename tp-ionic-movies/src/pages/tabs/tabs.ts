@@ -11,6 +11,7 @@ import { FavoriteMoviesPage } from '../favorite-movies/favorite-movies';
 })
 export class TabsPage {
 
+
   tab1Root = FavoriteMoviesPage;
   tab2Root = MovieListPage;
   tab3Root = Pictures;

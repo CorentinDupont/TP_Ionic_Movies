@@ -26,6 +26,7 @@ export class MovieComponent {
   public awards: string;
   public production: string;
   public poster: string;
+  public plot: string;
 
   constructor() {
 

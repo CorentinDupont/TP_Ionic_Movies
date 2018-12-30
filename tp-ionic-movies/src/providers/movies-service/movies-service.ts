@@ -26,7 +26,7 @@ export class MoviesServiceProvider {
 
   create(movie: MovieComponent){
     console.log("Creating movie ...")
-    let sql = 'INSERT INTO movies('+Object.keys(movie).join(', ')+') VALUES(?,?,?,?,?,?,?,?,?,?,?,?)';
+    let sql = 'INSERT INTO movies('+Object.keys(movie).join(', ')+') VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
     let params = Object.keys(movie).map(key => movie[key]);
     console.log("PARAMS : ", JSON.stringify(params));
     this.db.executeSql(sql, params).then((result)=>{
@@ -53,10 +53,22 @@ export class MoviesServiceProvider {
       'awards TEXT',
       'production TEXT',
       'poster TEXT',
+      'plot TEXT',
     ];
     
     let sql = 'CREATE TABLE IF NOT EXISTS movies(id INTEGER PRIMARY KEY AUTOINCREMENT, '+movieArguments.join(', ')+')';
     console.log("creating movies data table ...")
+
+    
+
+    this.db.executeSql("DROP TABLE IF EXISTS movies", [])
+    .then(() => {
+      console.log('Suppression de la table pétée')
+    }).catch(error => {
+      console.log(error);
+    });
+
+    console.log(sql)
     this.db.executeSql(sql, [])
     .then(() => {
       console.log('movies data table created !')
@@ -148,6 +160,7 @@ export class MoviesServiceProvider {
     movie.awards = data.awards;
     movie.production = data.production;
     movie.poster = data.poster;
+    movie.plot = data.plot;
 
     return movie;
   }

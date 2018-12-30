@@ -4,47 +4,44 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-content fullscreen="true">
 
-  <ion-navbar>
-    <ion-title>showMovie</ion-title>
-  </ion-navbar>
+  <ion-header no-border>
+    <ion-navbar>
+    </ion-navbar>
+  </ion-header>
+  <div class="no-padding scroll-content" id="img-parralax-container" col-12>
+    <img src={{movie.poster}} col-12 class="no-padding" id="parallax-image">
+    <div></div>
+  </div>
 
-</ion-header>
-
-
-<ion-content padding>
-  <ion-card>
-      <img src={{movie.poster}}>
-      <ion-card-content>
-        <ion-card-title>
-          {{movie.title}}
-        </ion-card-title>
-        <ion-list>
-          <ion-item>imdbId : {{movie.imdbId}}</ion-item>
-          <ion-item>Year : {{movie.year}}</ion-item>
-          <ion-item>Rated : {{movie.rated}}</ion-item>
-          <ion-item>Released : {{movie.released}}</ion-item>
-          <ion-item>Runtime : {{movie.runtime}}</ion-item>
-          <ion-item>Genre : {{movie.genre}}</ion-item>
-          <ion-item>Director : {{movie.director}}</ion-item>
-          <ion-item>Language : {{movie.language}}</ion-item>
-          <ion-item>Country : {{movie.country}}</ion-item>
-          <ion-item>Awards : {{movie.awards}}</ion-item>
-          <ion-item>Production : {{movie.production}}</ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
+  <ion-grid class="no-padding relative">
+    <ion-row class="background-primary">
+      <ion-col col-8 class="">
+        <h2>{{movie.title}}</h2>
+        <p>{{movie.released}}</p>
+        <p>{{movie.production}}</p>
+      </ion-col>
+      <ion-col col-4 id="runtime-container">
+        <p>{{movie.runtime}}</p>
+      </ion-col>
+    </ion-row>
+    <button id="fav-button" [disabled]="addToFavoriteButtonIsDisabled" (click)="addToFavorite(movie)">
+      <ion-icon name="heart-outline" class="primary"></ion-icon>
+    </button>
+  </ion-grid>
+  <div class="info-div">
+    <p>{{movie.plot}}</p>
+  </div>
+  <div class="info-div">
+    <p>Réalisé par {{movie.director}}</p>
+  </div>
+  <div class="info-div">
+    <p>{{movie.awards}}</p>
+  </div>
 
     <ng-container *ngIf="!isAFavMovie; then aFavMovie else notAFavMovie"></ng-container>
 
-    <!-- Button add to favorite -->
-    <ng-template #aFavMovie>
-      <button [disabled]="addToFavoriteButtonIsDisabled" ion-button icon-start (click)="addToFavorite(movie)">
-        <ion-icon name="heart"></ion-icon>
-        Ajouter aux favoris
-      </button>
-    </ng-template>
     
     <!-- Button remove from favorite -->
     <ng-template #notAFavMovie>
@@ -54,11 +51,8 @@
       </button>
     </ng-template>
 
-    <ion-card *ngIf="createdCode">
-      <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
-      <ion-card-content>
-        <p>Value: {{ createdCode }}</p>
-      </ion-card-content>
-    </ion-card>
+  <div class="background-primary">
+    <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
+  </div>
     
 </ion-content>

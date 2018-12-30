@@ -27,6 +27,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 
+import { GetFirstGenrePipe } from '../pipes/get-first-genre'
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     ShowMoviePage,
     Pictures,
     FavoriteMoviesPage,
-    FavMovieCardComponent
+    FavMovieCardComponent,
+    GetFirstGenrePipe
   ],
   imports: [
     BrowserModule,

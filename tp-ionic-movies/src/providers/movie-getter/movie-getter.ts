@@ -31,6 +31,7 @@ export class MovieGetterProvider {
     console.log(requestText);
     request.subscribe(
       (data: any) => {  
+
         //console.log(data);
         if(!!data.Search){
           data.Search.map((movieSimple) =>{
@@ -39,6 +40,7 @@ export class MovieGetterProvider {
 
 
             movieRequest.subscribe(data => {  
+              console.log(data['Genre'])
               var movie = new MovieComponent();
               movie.imdbId = data["imdbID"];
               movie.poster = data['Poster'];
@@ -52,6 +54,8 @@ export class MovieGetterProvider {
               movie.country = data['Country'];
               movie.awards = data['Awards'];
               movie.production = data['Production'];
+              movie.genre = data['Genre']; 
+              movie.plot = data['Plot']; 
 
               this.moviesList.push(movie);
               //console.log(data); 
@@ -90,6 +94,8 @@ export class MovieGetterProvider {
         movie.country = data['Country'];
         movie.awards = data['Awards'];
         movie.production = data['Production'];
+        movie.genre = data['Genre'];
+        movie.plot = data['Plot'];
         resolve(movie)
       },
       err => {

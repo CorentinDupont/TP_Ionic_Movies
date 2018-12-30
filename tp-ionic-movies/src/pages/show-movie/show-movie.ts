@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MovieComponent } from '../../components/movie/movie';
 import { MoviesServiceProvider } from '../../providers/movies-service/movies-service';
+import { StatusBar } from '@ionic-native/status-bar';
 
 /**
  * Generated class for the ShowMoviePage page.
@@ -17,23 +18,58 @@ import { MoviesServiceProvider } from '../../providers/movies-service/movies-ser
 })
 export class ShowMoviePage {
 
+
   public movie: MovieComponent;
   public isAFavMovie: boolean;
   public addToFavoriteButtonIsDisabled: boolean = false;
   public createdCode: String;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider, private statusBar: StatusBar) {
     // here, get the movie with id
     this.movie = navParams.get('movie');
     this.isAFavMovie = navParams.get('isAFavMovie');
+    this.statusBar.overlaysWebView(true);
+    this.statusBar.backgroundColorByHexString('#33000000');
+
   }
 
   ionViewDidEnter(){
     // test if it's not a fav movie when user came from search movie list
     !this.isAFavMovie && this.testIfMovieIsAlreadyInFavorite(this.movie);
     this.createCode(this.movie);
+
+    let previousScroll = 0;
+    let scrollHeight = 0
+    let difference = 0
+
+    let parallax = document.getElementById('parallax-image');
+    let parallaxContainer = document.getElementById('img-parralax-container');
+    
+    parallaxContainer.style.height = (70 / 100 * parallax['height']).toString() + "px";
+    console.log(parallaxContainer.style.height)
+    
+    console.log("loaded")
+    document.getElementsByClassName('scroll-content')[1].addEventListener('scroll', function(){
+      let scroll = document.getElementsByClassName('scroll-content')[1].scrollTop;
+      difference = previousScroll - scroll
+      previousScroll = scroll;
+      if(!parallax.style.top){
+        parallax.style.top = "0px"
+      }
+
+      scrollHeight = parseInt(parallax.style.top.replace('px', '')) + difference / 3 ;
+      if(scrollHeight >0 || scrollHeight*-1+parallaxContainer['height'] >= parallax['height']){
+        scrollHeight = 0;
+      }
+
+      parallax.style.top = scrollHeight.toString() + "px" ;
+    
+    })
   }
 
+  ionViewDidLoad(){
+    
+  }
   addToFavorite(movie: MovieComponent){
     console.log("Add to favorite movie : ",movie.title);
     this.moviesServiceProvider.create(movie);
@@ -62,6 +98,8 @@ export class ShowMoviePage {
     movie.id && delete movie.id
     this.createdCode = JSON.stringify(movie);
   }
+
+
 
 
 }

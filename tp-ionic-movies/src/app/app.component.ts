@@ -21,14 +21,16 @@ export class MyApp {
       console.log('Platform ready from', readySource);
 
       statusBar.styleDefault();
-      splashScreen.hide();
-      this.createDatabase();
+      
+      this.createDatabase(splashScreen.hide());
+
+      
 
     });
 
   }
 
-  private createDatabase(){
+  private createDatabase(callback){
     console.log("Creating database ...")
     this.sqlite.create({
       name: 'data.db',
@@ -38,6 +40,7 @@ export class MyApp {
       console.log("created database : ", db);
       this.moviesServiceProvider.setDatabase(db);
       this.moviesServiceProvider.createTable();
+      callback();
     })
     .catch(error =>{
       console.error(error);
