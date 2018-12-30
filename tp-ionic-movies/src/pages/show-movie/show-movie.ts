@@ -44,8 +44,7 @@ export class ShowMoviePage {
 
     let parallax = document.getElementById('parallax-image');
     let parallaxContainer = document.getElementById('img-parralax-container');
-    
-    parallaxContainer.style.height = (70 / 100 * parallax['height']).toString() + "px";
+  
     console.log(parallaxContainer.style.height)
     
     console.log("loaded")

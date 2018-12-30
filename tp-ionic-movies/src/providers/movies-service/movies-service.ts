@@ -61,12 +61,12 @@ export class MoviesServiceProvider {
 
     
 
-    this.db.executeSql("DROP TABLE IF EXISTS movies", [])
+    /* this.db.executeSql("DROP TABLE IF EXISTS movies", [])
     .then(() => {
       console.log('Suppression de la table pétée')
     }).catch(error => {
       console.log(error);
-    });
+    }); */
 
     console.log(sql)
     this.db.executeSql(sql, [])

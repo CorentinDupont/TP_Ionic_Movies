@@ -13,7 +13,7 @@ page-show-movie {
     }
 
     #img-parralax-container{
-        height: 40vh;
+        height: 60vh;
         -webkit-transition: height 0.4s ease-in;
         -moz-transition: height 0.4s ease-in;
         -ms-transition: height 0.4s ease-in;
@@ -26,6 +26,7 @@ page-show-movie {
     #parallax-image{
         position : absolute;
         z-index : -1;
+        height : 140%;
     }
     #img-parralax-container > div{
         position: absolute;

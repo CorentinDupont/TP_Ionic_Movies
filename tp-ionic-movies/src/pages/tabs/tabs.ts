@@ -10,13 +10,11 @@ import { FavoriteMoviesPage } from '../favorite-movies/favorite-movies';
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-
-
   tab1Root = FavoriteMoviesPage;
   tab2Root = MovieListPage;
   tab3Root = Pictures;
 
-  constructor() {
+  constructor(  ){
 
   }
 }
