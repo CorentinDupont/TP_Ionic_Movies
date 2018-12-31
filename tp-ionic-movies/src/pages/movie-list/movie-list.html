@@ -5,7 +5,7 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar>
+  <ion-navbar class="custom-header">
     <ion-title>
         Tous les films
     </ion-title>
@@ -18,10 +18,11 @@
   <div class="search-bar-block">
     <ion-searchbar (keyup)="onKey($event)"></ion-searchbar>
     <button ion-button clear icon-only (click)="scanCode()">
-      <ion-icon name="qr-scanner" color="dark"></ion-icon>
+      <ion-icon name="qr-scanner" color="primary"></ion-icon>
     </button>
   </div>
   
+  <!-- To much movies found block -->
   <span *ngIf="movieGetter.moviesList.length == 0">
     <ion-card>
       <ion-card-title>Error</ion-card-title>
@@ -33,24 +34,28 @@
       </ion-card-content>
     </ion-card>
   </span>
-<ion-grid>
-  <ion-row>
-    <ion-col col-6 *ngFor="let movie of movieGetter.moviesList">
-      <ion-card (click)="showMovie(movie)">
-        <img src={{movie.poster}}/>
-        <ion-card-content>
-          <p class="card-title">
-            {{movie.title}}
+
+  <!-- Movies grid -->
+  <ion-grid>
+    <ion-row>
+      <ion-col col-6 *ngFor="let movie of movieGetter.moviesList" class="movie-column">
+        <ion-card (click)="showMovie(movie)" class="movie-card">
+          <img src={{movie.poster}}/>
+          <ion-card-content>
+            <p class="card-title">
+              {{movie.title}}
+              </p>
+            <p>
+              <span *ngIf="movie.genre">{{movie.genre | getFirstGenre }} - </span>
+              {{movie.year}}
             </p>
-          <p>
-            <span *ngIf="movie.genre">{{movie.genre | getFirstGenre }} - </span>
-            {{movie.year}}
-          </p>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)" >
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more movies..."></ion-infinite-scroll-content>
  </ion-infinite-scroll>
