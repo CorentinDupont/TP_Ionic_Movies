@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AlertController } from 'ionic-angular';
 
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
@@ -14,7 +15,17 @@ export class TabsPage {
   tab2Root = MovieListPage;
   tab3Root = Pictures;
 
-  constructor(  ){
+  constructor( public alertCtrl : AlertController ){
 
+  }
+
+  doAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Network Error',
+      subTitle: "je n'ai accès à aucun réseau wifi, mon fonctionnement en est donc très dégradé ",
+      buttons: ['Ok']
+    });
+
+    alert.present();
   }
 }

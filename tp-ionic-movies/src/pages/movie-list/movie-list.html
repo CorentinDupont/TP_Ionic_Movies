@@ -21,6 +21,7 @@
       <ion-icon name="qr-scanner" color="primary"></ion-icon>
     </button>
   </div>
+  <button (onclick)="doAlert()">Alert</button>
   
   <!-- To much movies found block -->
   <span *ngIf="movieGetter.moviesList.length == 0">
