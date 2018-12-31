@@ -25,9 +25,12 @@ import { FavMovieCardComponent } from '../components/fav-movie-card/fav-movie-ca
 
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Network } from '@ionic-native/network';
+
 
 
 import { GetFirstGenrePipe } from '../pipes/get-first-genre'
+import { NetworkProvider } from '../providers/network/network';
 
 @NgModule({
   declarations: [
@@ -73,7 +76,9 @@ import { GetFirstGenrePipe } from '../pipes/get-first-genre'
     Camera,
     SQLite,
     MoviesServiceProvider,
-    BarcodeScanner
+    BarcodeScanner,
+    NetworkProvider,
+    Network
   ]
 })
 export class AppModule {}
