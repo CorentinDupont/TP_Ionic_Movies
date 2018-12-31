@@ -16,7 +16,6 @@ export class MovieGetterProvider {
   public moviesList=[];
 
   constructor(public httpClient : HttpClient, private toastController: ToastController) {
-    var i;
     this.getMovies("blue", 1);
   }
 

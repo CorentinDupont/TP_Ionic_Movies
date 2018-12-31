@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Network } from '@ionic-native/network';
 import { HttpClient } from '@angular/common/http';
+import { AlertController } from 'ionic-angular';
 
 
 
@@ -13,33 +14,10 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class NetworkProvider {
 
-  connected:boolean;
-  connection:any;
+  public networkAlertIsOpened:boolean = false;
 
-  constructor(public httpClient : HttpClient, public network: Network) {
+  constructor(public httpClient : HttpClient, public network: Network, public alertCtrl : AlertController) {
     console.log('Hello NetworkProvider Provider');
-
-    this.connection = network.Connection;
-
-    // watch network for a disconnection
-    this.network.onDisconnect().subscribe(() => {
-      console.log('network was disconnected :-(');
-      this.connected=false;
-    });
-
-    // watch network for a connection
-    this.network.onConnect().subscribe(() => {
-      console.log('network connected!');
-      // We just got a connection but we need to wait briefly
-      // before we determine the connection type. Might need to wait.
-      // prior to doing any api requests as well.
-      setTimeout(() => {
-        if (this.network.type === 'wifi') {
-          this.connected = true;
-        }
-      }, 3000);
-    });
-
   }
 
   getConnectionState(){
@@ -48,6 +26,25 @@ export class NetworkProvider {
 
   hasInternetConnection(){
     return this.network.type !== this.network.Connection.NONE;
+  }
+
+  doNetworkAlert() {
+    if(!this.networkAlertIsOpened){
+      this.networkAlertIsOpened=true;
+      let alert = this.alertCtrl.create({
+        title: 'Erreur de connexion',
+        subTitle: "Aucun accès internet. Veuillez connecter votre appareil à internet.",
+        enableBackdropDismiss:false,
+        buttons: [{
+          text: 'Ok',
+          role: 'Cancel',
+          handler: () => {
+            this.networkAlertIsOpened=false;
+          }
+        }]
+      });
+      alert.present();
+    }
   }
 
 }

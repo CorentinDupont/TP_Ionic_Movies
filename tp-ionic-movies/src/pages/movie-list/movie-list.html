@@ -14,8 +14,6 @@
 
 <ion-content padding>
 
-<p>{{hasInternetConnection()}}</p>
-
   <!-- Search bar block -->
   <div class="search-bar-block">
     <ion-searchbar (keyup)="onKey($event)"></ion-searchbar>
@@ -23,15 +21,14 @@
       <ion-icon name="qr-scanner" color="primary"></ion-icon>
     </button>
   </div>
-  <button (onclick)="doAlert()">Alert</button>
   
   <!-- To much movies found block -->
   <span *ngIf="movieGetter.moviesList.length == 0">
     <ion-card>
-      <ion-card-title>Error</ion-card-title>
+      <ion-card-title class="custom-ion-card-title">Erreur</ion-card-title>
       <ion-card-content>
         <p>
-         Il y a trop de films, veuillez affiner votre recherche
+          Il y a possiblement trop de film, veuillez affinez votre recherche. SI le problème persiste, veuillez vérifier votre connexion internet.
         </p>
       </ion-card-content>
     </ion-card>
