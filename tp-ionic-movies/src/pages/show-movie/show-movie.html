@@ -59,8 +59,9 @@
       </button>
     </ng-template>
 
-  <div class="background-primary">
-    <ngx-qrcode [qrc-value]="createdCode"></ngx-qrcode>
+  <div class="background-primary qrcode-container">
+    <ngx-qrcode [qrc-value]="createdCode" class="qr-code"></ngx-qrcode>
+    <p class="text-light">Faite scanner ce QR Code à vos amis pour qu'ils puissent le rajouter dans leurs favoris</p>
   </div>
     
 </ion-content>

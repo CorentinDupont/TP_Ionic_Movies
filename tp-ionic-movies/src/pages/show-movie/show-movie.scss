@@ -77,4 +77,21 @@ page-show-movie {
         padding: 15px;
         border-bottom : 1px solid map-get($colors, grey )
     }
+
+    .qr-code{
+        align-self: center;
+    }
+
+    .qr-code img{
+        border-radius:8px;
+        min-width:160px;
+    }
+
+    .qrcode-container{
+        display: flex;
+        flex-direction: column;
+        padding:20px;
+    }
+
+    
 }

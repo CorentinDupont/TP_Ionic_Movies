@@ -80,8 +80,11 @@ export class MovieGetterProvider {
 
     return new Promise<MovieComponent>((resolve, reject) => {
       console.log("MOVIE GETTER - enter in promise", imdbId);
+
+      // Cause of qr code or something else, imdbId contains double qotes in the URL. first and last caracter are removed.
       let request = `http://www.omdbapi.com/?i=${imdbId.substring(1).slice(0,-1)}&plot=full&apikey=69335388`;
       console.log("MOVIE GETTER - request : ", request);
+      
       var movieRequest=this.httpClient.get(request);
   
       movieRequest.subscribe(data => {
