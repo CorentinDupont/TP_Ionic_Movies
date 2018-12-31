@@ -2,8 +2,11 @@
   <!--List movie -->
 
   
-    <ion-card (click)="callShowMovie(movie)" class="movie-card-container">
-      <img src={{movie.poster}}/>
+    <ion-card class="movie-card-container">
+      <button ion-button clear icon-only (click)="presentActionSheet()" class="option-button">
+        <ion-icon name="more" color="light"></ion-icon>
+      </button>
+      <img src={{movie.poster}} (click)="callShowMovie(movie)"/>
       <ion-card-content>
         <p class="card-title">
           {{movie.title}}

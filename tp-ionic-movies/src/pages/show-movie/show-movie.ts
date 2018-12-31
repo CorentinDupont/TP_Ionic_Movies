@@ -69,6 +69,15 @@ export class ShowMoviePage {
   ionViewDidLoad(){
     
   }
+
+  switchFavorite(movie: MovieComponent){
+    if(this.isAFavMovie){
+      this.removeFromFavorite(movie);
+    }else{
+      this.addToFavorite(movie);
+    }
+  }
+
   addToFavorite(movie: MovieComponent){
     console.log("Add to favorite movie : ",movie.title);
     this.moviesServiceProvider.create(movie);
