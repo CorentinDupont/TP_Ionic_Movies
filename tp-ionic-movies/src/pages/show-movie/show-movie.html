@@ -7,14 +7,17 @@
 <ion-content fullscreen="true">
 
   <ion-header no-border>
-    <ion-navbar>
+    <ion-navbar class="custom-header">
     </ion-navbar>
   </ion-header>
+
+  <!-- Image parallax -->
   <div class="no-padding scroll-content" id="img-parralax-container" col-12>
     <img src={{movie.poster}} col-12 class="no-padding" id="parallax-image">
     <div></div>
   </div>
 
+  <!-- Red block under image -->
   <ion-grid class="no-padding relative">
     <ion-row class="background-primary">
       <ion-col col-8 class="">
@@ -26,10 +29,14 @@
         <p>{{movie.runtime}}</p>
       </ion-col>
     </ion-row>
+    <!-- Fav button -->
     <button id="fav-button" [disabled]="addToFavoriteButtonIsDisabled" (click)="addToFavorite(movie)">
-      <ion-icon name="heart-outline" class="primary"></ion-icon>
+      <ion-icon *ngIf="!isAFavMovie && !addToFavoriteButtonIsDisabled" name="heart-outline" class="primary"></ion-icon>
+      <ion-icon *ngIf="addToFavoriteButtonIsDisabled || isAFavMovie" name="heart" class="primary"></ion-icon>
     </button>
   </ion-grid>
+
+  <!-- movie informations -->
   <div class="info-div" >
     <p>{{movie.plot}}</p>
   </div>
@@ -39,6 +46,7 @@
   <div class="info-div">
     <p>{{movie.awards}}</p>
   </div>
+
 
     <ng-container *ngIf="!isAFavMovie; then aFavMovie else notAFavMovie"></ng-container>
 

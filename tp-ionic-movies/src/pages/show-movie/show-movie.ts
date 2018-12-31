@@ -94,8 +94,7 @@ export class ShowMoviePage {
   }
 
   createCode(movie: MovieComponent) {
-    movie.id && delete movie.id
-    this.createdCode = JSON.stringify(movie);
+    this.createdCode = JSON.stringify(movie.imdbId);
   }
 
 

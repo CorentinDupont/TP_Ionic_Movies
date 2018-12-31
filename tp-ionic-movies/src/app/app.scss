@@ -22,3 +22,8 @@
 .toolbar-title{
     color : map-get($colors, light ) ;
 }
+
+.custom-header{
+    padding-top:22px;
+    height:84px; //56 + 22
+}

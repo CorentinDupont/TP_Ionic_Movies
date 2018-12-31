@@ -3,7 +3,11 @@
     <name>tp-ionic-movies</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+<<<<<<< HEAD
     <content src="index.html" />
+=======
+    <content original-src="index.html" src="http://172.20.10.2:8100" />
+>>>>>>> c82a67e26f25fa3856714e53d41b1fc5ad64cc31
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />

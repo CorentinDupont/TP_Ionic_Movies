@@ -76,11 +76,17 @@ export class MovieGetterProvider {
 
   getOneMovie(imdbId:string){
 
+    console.log("MOVIE GETTER - try to get one movie", imdbId);
+
     return new Promise<MovieComponent>((resolve, reject) => {
-      let request = 'http://www.omdbapi.com/?i='+imdbId+'&plot=full&apikey=69335388';
+      console.log("MOVIE GETTER - enter in promise", imdbId);
+      let request = `http://www.omdbapi.com/?i=${imdbId.substring(1).slice(0,-1)}&plot=full&apikey=69335388`;
+      console.log("MOVIE GETTER - request : ", request);
       var movieRequest=this.httpClient.get(request);
   
       movieRequest.subscribe(data => {
+        console.log("MOVIE GETTER - one movie found !", JSON.stringify(data));
+
         let movie = new MovieComponent();
         movie.imdbId = data["imdbID"];
         movie.poster = data['Poster'];
