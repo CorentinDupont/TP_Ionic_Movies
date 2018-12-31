@@ -81,10 +81,10 @@ export class MoviesServiceProvider {
     let sql = 'SELECT * FROM movies WHERE imdbId=?'
 
     return new Promise<MovieComponent[]>((resolve, reject) => {
-      console.log("MOVIES : select by title : enter in promise")
+      console.log("MOVIES : select by imdbId : enter in promise", imdbId)
       this.db.executeSql(sql, [imdbId])
       .then((response) => {
-        console.log("MOVIES : select by title : response !!", JSON.stringify(response))
+        console.log("MOVIES : select : response !!", JSON.stringify(response))
 
         // Get movies array from response
         let movies:MovieComponent[] = [];
@@ -97,7 +97,7 @@ export class MoviesServiceProvider {
 
       })
       .catch(error => {
-        console.log("MOVIES : select by title : ERROR", JSON.stringify(error));
+        console.error("MOVIES : select by title : ERROR", JSON.stringify(error));
         reject(error)
       })
     })

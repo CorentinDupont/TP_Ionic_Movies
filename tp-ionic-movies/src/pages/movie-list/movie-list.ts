@@ -48,24 +48,33 @@ export class MovieListPage {
   scanCode() {
     this.barcodeScanner.scan().then(barcodeData => {
       console.log("QR CODE SCANNER : get some data");
-      try {
-        const scannedJson = JSON.parse(barcodeData.text);
-        console.log("QR CODE SCANNER : scannedJson", JSON.stringify(scannedJson));
 
-        if(scannedJson.hasOwnProperty("imdbId")){
-          console.log("QR CODE SCANNER : scannedJson has property imdbId")
-          this.movieGetter.getOneMovie(scannedJson.imdbId).then((movie:MovieComponent)=>{
-            console.log("SCANNED MOVIE :", JSON.stringify(movie));
-            this.navCtrl.push(ShowMoviePage, {movie, isAFavMovie:false});
-          })
-        }else{
-          console.log("This was not a movie !")
-        }
+      const scannedImdbId = barcodeData.text;
+      console.log("QR CODE SCANNER : scannedImdbId", scannedImdbId);
+
+      this.movieGetter.getOneMovie(scannedImdbId).then((movie:MovieComponent)=>{
+        console.log("SCANNED MOVIE :", JSON.stringify(movie));
+        this.navCtrl.push(ShowMoviePage, {movie, isAFavMovie:false});
+      }).catch(error => {console.error(JSON.stringify(error))});
+
+      // try {
+      //   const scannedJson = JSON.parse(barcodeData.text);
+      //   console.log("QR CODE SCANNER : scannedJson", JSON.stringify(scannedJson));
+
+      //   if(scannedJson.hasOwnProperty("imdbId")){
+      //     console.log("QR CODE SCANNER : scannedJson has property imdbId")
+      //     this.movieGetter.getOneMovie(scannedJson.imdbId).then((movie:MovieComponent)=>{
+      //       console.log("SCANNED MOVIE :", JSON.stringify(movie));
+      //       this.navCtrl.push(ShowMoviePage, {movie, isAFavMovie:false});
+      //     })
+      //   }else{
+      //     console.log("This was not a movie !")
+      //   }
         
-      } catch (error) {
-        console.log(error);
-        console.log("This was not a movie !")
-      }
+      // } catch (error) {
+      //   console.log(error);
+      //   console.log("This was not a movie !")
+      // }
      
       // the following code is usefull for adding movie directly in favorite.
 
