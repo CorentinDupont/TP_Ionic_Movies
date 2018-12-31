@@ -88,11 +88,7 @@
     </plugin>
     <allow-navigation href="http://172.20.10.2:8100" sessionid="12446260" />
     <plugin name="cordova-sqlite-storage" spec="2.6.0" />
-<<<<<<< HEAD
     <allow-navigation href="http://192.168.1.34:8100" sessionid="d7e76394" />
-=======
-    <allow-navigation href="http://192.168.1.34:8100" sessionid="3bb6739d" />
->>>>>>> 568997ebd742914ab4855497d189eaec1f04949b
     <engine name="android" spec="7.1.4" />
     <engine name="ios" spec="4.5.5" />
 </widget>
