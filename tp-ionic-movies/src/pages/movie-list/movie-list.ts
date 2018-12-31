@@ -5,6 +5,8 @@ import { MovieComponent } from '../../components/movie/movie';
 import { ShowMoviePage } from '../show-movie/show-movie';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { MoviesServiceProvider } from '../../providers/movies-service/movies-service'
+// import { NetworkProvider } from '../../providers/network/network';
+import { NetworkProvider } from '../../providers/network/network';
 
 /**
  * Generated class for the MovieListPage page.
@@ -23,8 +25,8 @@ export class MovieListPage {
   movieTitle = "";
   private page = 1;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public movieGetter : MovieGetterProvider, private barcodeScanner: BarcodeScanner, private moviesServiceProvider: MoviesServiceProvider) {
-  
+  constructor(public navCtrl: NavController, public navParams: NavParams, public movieGetter : MovieGetterProvider, private barcodeScanner: BarcodeScanner, private moviesServiceProvider: MoviesServiceProvider, public networkProvider:NetworkProvider) {
+    console.log("NETWORK PROVIDER !!!!!!!!!! ", networkProvider);
   }
 
   onKey(event: any) { // without type info
@@ -105,6 +107,10 @@ export class MovieListPage {
         reject(error);
       });
     })
+  }
+
+  hasInternetConnection(){
+    return this.networkProvider.hasInternetConnection();
   }
   
 
