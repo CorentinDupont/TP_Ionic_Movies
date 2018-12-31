@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MovieComponent } from '../../components/movie/movie';
 import { MoviesServiceProvider } from '../../providers/movies-service/movies-service';
-import { StatusBar } from '@ionic-native/status-bar';
 
 /**
  * Generated class for the ShowMoviePage page.
@@ -24,12 +23,10 @@ export class ShowMoviePage {
   public addToFavoriteButtonIsDisabled: boolean = false;
   public createdCode: String;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider, private statusBar: StatusBar) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider) {
     // here, get the movie with id
     this.movie = navParams.get('movie');
     this.isAFavMovie = navParams.get('isAFavMovie');
-    this.statusBar.overlaysWebView(true);
-    this.statusBar.backgroundColorByHexString('#33000000');
 
   }
 
