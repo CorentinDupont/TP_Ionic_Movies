@@ -30,7 +30,7 @@
       </ion-col>
     </ion-row>
     <!-- Fav button -->
-    <button id="fav-button" [disabled]="addToFavoriteButtonIsDisabled" (click)="addToFavorite(movie)">
+    <button id="fav-button" [disabled]="addToFavoriteButtonIsDisabled" (click)="switchFavorite(movie)">
       <ion-icon *ngIf="!isAFavMovie && !addToFavoriteButtonIsDisabled" name="heart-outline" class="primary"></ion-icon>
       <ion-icon *ngIf="addToFavoriteButtonIsDisabled || isAFavMovie" name="heart" class="primary"></ion-icon>
     </button>
@@ -52,12 +52,12 @@
 
     
     <!-- Button remove from favorite -->
-    <ng-template #notAFavMovie>
+    <!-- <ng-template #notAFavMovie>
       <button ion-button icon-start color="danger" (click)="removeFromFavorite(movie)">
         <ion-icon name="trash"></ion-icon>
         Retirer des favoris
       </button>
-    </ng-template>
+    </ng-template> -->
 
   <div class="background-primary qrcode-container">
     <ngx-qrcode [qrc-value]="createdCode" class="qr-code"></ngx-qrcode>
