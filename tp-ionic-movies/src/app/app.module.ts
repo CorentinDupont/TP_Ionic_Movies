@@ -31,6 +31,21 @@ import { Network } from '@ionic-native/network';
 
 import { GetFirstGenrePipe } from '../pipes/get-first-genre'
 import { NetworkProvider } from '../providers/network/network';
+import { DeuxMille48Page } from '../pages/deux-mille48/deux-mille48';
+
+import { HammerGestureConfig, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser'; // for gesture
+
+export class MyHammerConfig extends HammerGestureConfig  {
+  overrides = <any>{
+      // override hammerjs default configuration
+      'pan': {threshold: 5},
+      'swipe': {
+           velocity: 0.4,
+           threshold: 20,
+           direction: 31 // /!\ ugly hack to allow swipe in all direction
+      }
+  }
+}
 
 @NgModule({
   declarations: [
@@ -45,7 +60,8 @@ import { NetworkProvider } from '../providers/network/network';
     Pictures,
     FavoriteMoviesPage,
     FavMovieCardComponent,
-    GetFirstGenrePipe
+    GetFirstGenrePipe,
+    DeuxMille48Page
   ],
   imports: [
     BrowserModule,
@@ -66,7 +82,8 @@ import { NetworkProvider } from '../providers/network/network';
     ShowMoviePage,
     Pictures,
     FavoriteMoviesPage,
-    FavMovieCardComponent
+    FavMovieCardComponent,
+    DeuxMille48Page
   ],
   providers: [
     StatusBar,
@@ -78,7 +95,11 @@ import { NetworkProvider } from '../providers/network/network';
     MoviesServiceProvider,
     BarcodeScanner,
     NetworkProvider,
-    Network
+    Network,
+    { 
+      provide: HAMMER_GESTURE_CONFIG, 
+      useClass: MyHammerConfig 
+    }
   ]
 })
 export class AppModule {}
