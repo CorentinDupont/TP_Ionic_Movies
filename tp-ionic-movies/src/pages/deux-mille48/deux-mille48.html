@@ -1,0 +1,28 @@
+<!--
+  Generated template for the DeuxMille48Page page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>DeuxMille48</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div id="plateau" (swipe)="swipeEvent($event)">
+    <span *ngFor="let cases of plateau">
+      <div class="cel" *ngFor="let casePlateau of cases">
+        <div *ngIf="casePlateau != 0">
+          <img src="../../assets/2048-elements/element{{casePlateau}}.png" style="width:100%; height:100%;"/>
+        </div>
+      </div>
+    </span>
+  </div>
+  <h2>{{score}}</h2>
+
+</ion-content>
