@@ -1,19 +1,21 @@
-<!-- Generated template for the FavMovieCardComponent component -->
-  <!--List movie -->
+<!-- Generated template for the FavMovieCardComponent component -->  
 
-  
-    <ion-card class="movie-card-container">
-      <button ion-button clear icon-only (click)="presentActionSheet()" class="option-button">
-        <ion-icon name="more" color="light"></ion-icon>
-      </button>
-      <img src={{movie.poster}} (click)="callShowMovie(movie)"/>
-      <ion-card-content>
-        <p class="card-title">
-          {{movie.title}}
-          </p>
-        <p>
-          <span *ngIf="movie.genre">{{movie.genre | getFirstGenre}} - </span>
-          {{movie.year}}
-        </p>
-      </ion-card-content>
-    </ion-card>
+<!-- Card -->
+<ion-card class="movie-card-container">
+  <!-- Option button, which open an action sheet, to remove from favorite from the favorite movie list -->
+  <button ion-button clear icon-only (click)="presentActionSheet()" class="option-button">
+    <ion-icon name="more" color="light"></ion-icon>
+  </button>
+
+  <!-- Informations displayed in the card -->
+  <img src={{movie.poster}} (click)="callShowMovie(movie)"/>
+  <ion-card-content>
+    <p class="card-title">
+      {{movie.title}}
+      </p>
+    <p>
+      <span *ngIf="movie.genre">{{movie.genre | getFirstGenre}} - </span>
+      {{movie.year}}
+    </p>
+  </ion-card-content>
+</ion-card>

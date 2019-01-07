@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { MoviesServiceProvider } from '../../providers/movies-service/movies-service';
-import { ArrayType } from '@angular/compiler/src/output/output_ast';
 import { MovieComponent } from '../../components/movie/movie';
 import { Events } from 'ionic-angular';
 import { ShowMoviePage } from '../show-movie/show-movie';
@@ -24,6 +23,8 @@ export class FavoriteMoviesPage {
   allFavoriteMovies = null;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider, public platform:Platform, public events: Events) {
+
+    // Create events to give access to some methods to favorite movie cards component
     events.subscribe('movies:refreshFavoriteMovies', () => {
       this.getAllFavoriteMovies();
     })
@@ -32,23 +33,22 @@ export class FavoriteMoviesPage {
     })
   }
 
-  
-
+  //Ionic Life Cycle Event - When the page is load (here, at the launch of the app)
   ionViewDidLoad() {
     console.log('ionViewDidLoad FavoriteMoviesPage');
   }
 
+  //Ionic Life Cycle Event - When page is shown
   ionViewDidEnter(){
     console.log('ionViewDidEnter FavoriteMoviesPage');    
     this.getAllFavoriteMovies();
-
   }
 
+  // call method from movie service provider to get all favorite movies in sqlite database
   getAllFavoriteMovies(){
     console.log("try to get all favorite movies ...")
     this.moviesServiceProvider.getAll()
     .then((data) => {
-      console.log("WTFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")
       console.log(JSON.stringify(data))
       this.allFavoriteMovies = data
     })
@@ -58,10 +58,10 @@ export class FavoriteMoviesPage {
     });
   }
 
+  // Method to open the page "show-movie" with the clicked movie
   showMovie(movie: MovieComponent){
     console.log('click on '+ JSON.stringify(movie));
     this.navCtrl.push(ShowMoviePage, {movie, isAFavMovie:true});
-}
-
+  } 
 
 }

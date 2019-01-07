@@ -20,14 +20,17 @@ export class NetworkProvider {
     console.log('Hello NetworkProvider Provider');
   }
 
+  // get connection type of the device, like wifi, 4G ...
   getConnectionState(){
     return this.network.type;
   }
 
+  // method used to know when device have an access to internet
   hasInternetConnection(){
     return this.network.type !== this.network.Connection.NONE;
   }
 
+  // Display an alert when device has no internet access on an action requiring it
   doNetworkAlert() {
     if(!this.networkAlertIsOpened){
       this.networkAlertIsOpened=true;

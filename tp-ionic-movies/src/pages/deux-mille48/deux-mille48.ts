@@ -18,7 +18,7 @@ export class DeuxMille48Page {
   plateau = [
     [ 0, 0, 0, 0],
     [ 0, 0, 0, 0],
-    [ 0, 0, 0, 0],
+    [ 0, 2, 0, 0],
     [ 0, 0, 0, 0]
   ];
   score = 0;
@@ -122,6 +122,7 @@ export class DeuxMille48Page {
         this.plateau[j][l]=0;
       }
     }
+    this.plateau[1][1]==2;
 
     let alert = this.alertCtrl.create({
       title: 'Game Over',
