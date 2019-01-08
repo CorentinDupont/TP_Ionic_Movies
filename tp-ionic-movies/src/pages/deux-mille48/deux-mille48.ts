@@ -3,10 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 
 /**
- * Generated class for the DeuxMille48Page page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ *  DeuxMille48Page page. Use to plau to 2048 game
  */
 
 @IonicPage()
@@ -15,12 +12,16 @@ import { AlertController } from 'ionic-angular';
   templateUrl: 'deux-mille48.html',
 })
 export class DeuxMille48Page {
+  /**
+   * Starting board
+   */
   plateau = [
     [ 0, 0, 0, 0],
     [ 0, 0, 0, 0],
     [ 0, 2, 0, 0],
     [ 0, 0, 0, 0]
   ];
+  /** starting score */
   score = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
@@ -30,27 +31,39 @@ export class DeuxMille48Page {
     console.log('ionViewDidLoad DeuxMille48Page');
   }
 
+  /**
+   * Where swip event is do in the board
+   * @param event the event
+   */
   swipeEvent(event){
     let dx=0;
     let dy=0;
+
+    // get swip direction
     switch(event.direction){
       case 2: dx-=1; break;
       case 4: dx+=1; break;
       case 8: dy-=1; break;
       case 16: dy+=1; break;
     }
+    // looping 10X game event
     if( (dx!=0 || dy!=0) && (dx==0 || dy==0) ){
-      console.log(dx+" "+dy);
+      
       let loopGame = 0;
       for(loopGame=0;loopGame<10;loopGame++){
         this.setGravity(dx,dy);
         this.fusionCase(dx,dy);
       }
-      
+      // pop a random 2 in board
       this.popRand2();
     }
   }
 
+  /**
+   * Fusion 2 same number in one by direction
+   * @param dx direction x
+   * @param dy  direction y
+   */
   private fusionCase(dx,dy){
     let x,y;
     for(y=0;y<4;++y){
@@ -68,7 +81,11 @@ export class DeuxMille48Page {
       }
     }
   }
-
+  /**
+   * Move all number to swip direction
+   * @param dx direction x
+   * @param dy direction y
+   */
   private setGravity(dx, dy){
     let nbLoop = 0;
     let x,y;
@@ -86,6 +103,9 @@ export class DeuxMille48Page {
     }
   }
 
+  /**
+   * Create a 2 un board if is not full
+   */
   private popRand2(){
     if(!this.grilleIsEnd()){
       while(1){
@@ -101,6 +121,9 @@ export class DeuxMille48Page {
     }
   }
 
+  /**
+   * Test if board is full
+   */
   private grilleIsEnd(){
     let j;
     let l;
@@ -114,6 +137,9 @@ export class DeuxMille48Page {
     return true;
   }
 
+  /**
+   * Where board is full, print alert and reset board and score
+   */
   private resetAlert() {
     let j;
     let l;

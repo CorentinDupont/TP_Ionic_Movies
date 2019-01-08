@@ -14,10 +14,15 @@
 
 
 <ion-content padding>
+  <!-- swip event -->
   <div id="plateau" (swipe)="swipeEvent($event)">
+    <!-- Board -->
     <span *ngFor="let cases of plateau">
+      <!-- board line -->
       <div class="cel" *ngFor="let casePlateau of cases">
+        <!-- If case != 0 -->
         <div *ngIf="casePlateau != 0">
+          <!-- Number image -->
           <img src="../../assets/2048-elements/element{{casePlateau}}.png" style="width:100%; height:100%;"/>
         </div>
       </div>
