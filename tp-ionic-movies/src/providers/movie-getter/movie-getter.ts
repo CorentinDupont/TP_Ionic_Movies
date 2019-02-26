@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from 'ionic-angular';
 import { MovieComponent } from '../../components/movie/movie';
+import { switchMap, combineLatest } from 'rxjs/operators';
 
 /*
   Generated class for the MovieGetterProvider provider.
@@ -30,59 +31,49 @@ export class MovieGetterProvider {
   // Search movie to fill the movie list, corresponding to a search string, and a page number, used with infinite scroll.
   addMovies(searchString, page, infiniteScroll = null){
     let requestText = 'http://www.omdbapi.com/?s='+searchString+'*&page='+page+'&apikey=69335388';
-    var request = this.httpClient.get(requestText)
+    var request$ = this.httpClient.get(requestText)
     console.log(requestText);
 
     // Subscribe to the omdbapi data
-    request.subscribe(
-      (data: any) => {  
-        //console.log(data);
-
-        // If some movies was found
+    request$.pipe(switchMap((data: any, index: number)=>{
+        let combinedRequest$ = null;
+        let subRequests$ = [];
         if(!!data.Search){
-          data.Search.map((movieSimple) =>{
-
+          subRequests$ = data.Search.map((movieSimple) =>{
             // Make a request movie by movie, to get all their data
             let request = 'http://www.omdbapi.com/?i='+movieSimple.imdbID+'&plot=full&apikey=69335388';
-            var movieRequest=this.httpClient.get(request);
-
-            // Subscribe to the movie data
-            movieRequest.subscribe(data => {  
-              console.log(data['Genre'])
-
-              // Make a movie object
-              var movie = new MovieComponent();
-              movie.imdbId = data["imdbID"];
-              movie.poster = data['Poster'];
-              movie.title = data['Title'];
-              movie.year = data['Year'];
-              movie.rated = data['Rated'];
-              movie.released = data['Released'];
-              movie.runtime = data['Runtime'];
-              movie.director = data['Director'];
-              movie.language = data['Language'];
-              movie.country = data['Country'];
-              movie.awards = data['Awards'];
-              movie.production = data['Production'];
-              movie.genre = data['Genre']; 
-              movie.plot = data['Plot']; 
-
-              // Push the new constructed movie into the movie list
-              this.moviesList.push(movie);
-            },
-            err => console.error(err+" for "+movieSimple.Title),
-            () => console.log('Movie' +movieSimple.Title +'Done')
-          );
-          })
+            var movieRequest$=this.httpClient.get(request);
+            return movieRequest$;
+          });
+          combinedRequest$ = combineLatest(subRequests$);
         }
-        if(infiniteScroll){
-          // Stop the infinite scroll when needed.
-          infiniteScroll.complete();
-        }
-      },
-      err => console.error(err),
-      () => console.log('Movie Done')
-    );
+        return combinedRequest$;
+    }))
+    .subscribe((movies: any) => {
+      movies.map(data => {  
+        console.log(data['Genre'])
+
+        // Make a movie object
+        var movie = new MovieComponent();
+        movie.imdbId = data["imdbID"];
+        movie.poster = data['Poster'];
+        movie.title = data['Title'];
+        movie.year = data['Year'];
+        movie.rated = data['Rated'];
+        movie.released = data['Released'];
+        movie.runtime = data['Runtime'];
+        movie.director = data['Director'];
+        movie.language = data['Language'];
+        movie.country = data['Country'];
+        movie.awards = data['Awards'];
+        movie.production = data['Production'];
+        movie.genre = data['Genre']; 
+        movie.plot = data['Plot']; 
+
+        // Push the new constructed movie into the movie list
+        this.moviesList.push(movie);
+      });
+    });
   }
 
   // Search one movie by imdb Id. Used when a user scan a QR Code
