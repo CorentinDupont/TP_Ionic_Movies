@@ -12,7 +12,15 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "target": "es5",
-    "paths": [{}],
+    "baseUrl": "src",
+    "paths": {
+      "@providers/*":["src/providers/*"],
+      "@components/*":["src/components/*"],
+      "@pages/*":["src/pages/*"],
+      "@assets/*":["src/assets/*"],
+      "@pipes/*":["src/pipes/*"],
+      "@theme/*":["src/theme/*"],
+    }
   },
   "include": [
     "src/**/*.ts"
@@ -25,5 +33,5 @@
   "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false
-  }
+  },
 }

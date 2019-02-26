@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2, HostListener } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MovieComponent } from '../../components/movie/movie';
 import { MoviesServiceProvider } from '../../providers/movies-service/movies-service';
+import { DefaultKeyValueDiffer } from '@angular/core/src/change_detection/differs/default_keyvalue_differ';
 
 /**
  * Generated class for the ShowMoviePage page.
@@ -20,6 +21,8 @@ export class ShowMoviePage {
   // the displayed movie
   public movie: MovieComponent;
 
+  @ViewChild('imgParralaxContainer') parallaxContainer: ElementRef;
+
   /**
    * These to booleans manage the "favorite" state of the concerned movie
    * isAFavMovie is calculated when the page is opened, when the previous page was movie-list
@@ -32,9 +35,10 @@ export class ShowMoviePage {
   public createdCode: String;
 
   // Constructor
-  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public moviesServiceProvider: MoviesServiceProvider, private renderer: Renderer2) {
     // get the movie from previous page
     this.movie = navParams.get('movie');
+    
     /**
      * get the favorite movie state from previous page 
      * If the previous page is the favorite-movies page, then it will be true
@@ -44,27 +48,23 @@ export class ShowMoviePage {
 
   }
 
-  // Ionic Life Cycle Event - When page is show
-  ionViewDidEnter(){
-    // test if it's not a fav movie when user came from search movie list
-    !this.isAFavMovie && this.testIfMovieIsAlreadyInFavorite(this.movie);
-    this.createCode(this.movie);
-
+  @HostListener('window:scroll', ['$event']) 
+  dotheJob(event) {
+    console.log(event)
     /**
      * MANAGE MOVIE POSTER PARALLAX
      */
+    /*
     let previousScroll = 0;
     let scrollHeight = 0
     let difference = 0
-
-    let parallax = document.getElementById('parallax-image');
-    let parallaxContainer = document.getElementById('img-parralax-container');
-  
-    console.log(parallaxContainer.style.height)
+    let parallax = this.parallaxContainer.nativeElement.children[0];
+    console.log("#######")
+    console.log(this.parallaxContainer.nativeElement.style);
     
-    console.log("loaded")
-    document.getElementsByClassName('scroll-content')[1].addEventListener('scroll', function(){
-      let scroll = document.getElementsByClassName('scroll-content')[1].scrollTop;
+    this.parallaxContainer.nativeElement.addEventListener('scroll', () => {
+      console.log("test");
+      let scroll = this.parallaxContainer.nativeElement.scrollTop;
       difference = previousScroll - scroll
       previousScroll = scroll;
       if(!parallax.style.top){
@@ -72,13 +72,27 @@ export class ShowMoviePage {
       }
 
       scrollHeight = parseInt(parallax.style.top.replace('px', '')) + difference / 3 ;
-      if(scrollHeight >0 || scrollHeight*-1+parallaxContainer['height'] >= parallax['height']){
+      if(scrollHeight >0 || scrollHeight*-1+ this.parallaxContainer.nativeElement['height'] >= parallax['height']){
         scrollHeight = 0;
       }
 
       parallax.style.top = scrollHeight.toString() + "px" ;
     
     })
+    */
+  }
+  track(value: number): void {
+    console.log("BONJOUR");
+    console.log(value);
+  }
+
+  // Ionic Life Cycle Event - When page is show
+  ionViewDidEnter(){
+    // test if it's not a fav movie when user came from search movie list
+    !this.isAFavMovie && this.testIfMovieIsAlreadyInFavorite(this.movie);
+    this.createCode(this.movie);
+
+    
   }
 
   // Function called by the favorite button on click

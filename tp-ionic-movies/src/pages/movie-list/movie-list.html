@@ -18,14 +18,14 @@
 
   <!-- Search bar block -->
   <div class="search-bar-block">
-    <ion-searchbar (ionChange)="onChange($event)" debounce="1000"></ion-searchbar>
+    <ion-searchbar (ionInput)="onChange($event)" debounce="1000"></ion-searchbar>
     <button ion-button clear icon-only (click)="scanCode()">
       <ion-icon name="qr-scanner" color="primary"></ion-icon>
     </button>
   </div>
   
   <!-- Error display block -->
-  <span *ngIf="movieGetter.moviesList.length == 0">
+  <span *ngIf="movieGetter.moviesList.length == 0 && !movieGetter.isLoading">
     <ion-card>
       <ion-card-title class="custom-ion-card-title">Erreur</ion-card-title>
       <ion-card-content>
@@ -61,6 +61,9 @@
 
     </ion-row>
   </ion-grid>
+
+  <!-- Loading modal -->
+  <loading *ngIf="movieGetter.isLoading"></loading>
 
 
   <!-- Infinite scroll block -->

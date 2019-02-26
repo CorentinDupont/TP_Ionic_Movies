@@ -43,7 +43,7 @@ export class MyApp {
       callback();
     })
     .catch(error =>{
-      console.error(error);
+      console.error(JSON.stringify(error));
     });
   }
   
