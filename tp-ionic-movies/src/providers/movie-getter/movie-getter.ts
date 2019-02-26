@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastController } from 'ionic-angular';
 import { MovieComponent } from '../../components/movie/movie';
-import { switchMap, combineLatest } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
+import { combineLatest } from 'rxjs/observable/combineLatest'
+import { of } from 'rxjs/observable/of'
 
 /*
   Generated class for the MovieGetterProvider provider.
@@ -34,23 +37,28 @@ export class MovieGetterProvider {
     var request$ = this.httpClient.get(requestText)
     console.log(requestText);
 
+
     // Subscribe to the omdbapi data
-    request$.pipe(switchMap((data: any, index: number)=>{
-        let combinedRequest$ = null;
-        let subRequests$ = [];
+    const combinedRequest$ = request$.pipe(switchMap((data: any, index: number)=>{
+        let combine$: Observable<any> = of(null);
         if(!!data.Search){
+          //get all observable into array
+          let subRequests$: Observable<any>[];
           subRequests$ = data.Search.map((movieSimple) =>{
             // Make a request movie by movie, to get all their data
             let request = 'http://www.omdbapi.com/?i='+movieSimple.imdbID+'&plot=full&apikey=69335388';
-            var movieRequest$=this.httpClient.get(request);
-            return movieRequest$;
+            return this.httpClient.get(request);
           });
-          combinedRequest$ = combineLatest(subRequests$);
+
+          combine$ = combineLatest(subRequests$);
+
         }
-        return combinedRequest$;
-    }))
-    .subscribe((movies: any) => {
-      movies.map(data => {  
+        return combine$;
+    }));
+
+    combinedRequest$ && combinedRequest$.subscribe((movies: any) => {
+      
+      movies && movies.map(data => {  
         console.log(data['Genre'])
 
         // Make a movie object
@@ -73,6 +81,7 @@ export class MovieGetterProvider {
         // Push the new constructed movie into the movie list
         this.moviesList.push(movie);
       });
+      infiniteScroll && infiniteScroll.complete();
     });
   }
 
