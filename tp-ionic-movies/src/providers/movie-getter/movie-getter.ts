@@ -4,8 +4,9 @@ import { ToastController } from 'ionic-angular';
 import { MovieComponent } from '../../components/movie/movie';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
-import { combineLatest } from 'rxjs/observable/combineLatest'
-import { of } from 'rxjs/observable/of'
+import { combineLatest } from 'rxjs/observable/combineLatest';
+import { of } from 'rxjs/observable/of';
+import 'rxjs/add/operator/first';
 
 /*
   Generated class for the MovieGetterProvider provider.
@@ -90,55 +91,47 @@ export class MovieGetterProvider {
 
     console.log("MOVIE GETTER - try to get one movie", imdbId);
 
-    return new Promise<MovieComponent>((resolve, reject) => {
-      console.log("MOVIE GETTER - enter in promise", imdbId);
+    console.log("MOVIE GETTER - enter in promise", imdbId);
 
-      // Cause of qr code or something else, imdbId contains double qotes in the URL. first and last characters are removed.
-      let request = `http://www.omdbapi.com/?i=${imdbId.substring(1).slice(0,-1)}&plot=full&apikey=69335388`;
-      console.log("MOVIE GETTER - request : ", request);
-      
-      var movieRequest=this.httpClient.get(request);
-  
-      // Subscribe to the movie data
-      movieRequest.subscribe((data:any) => {
+    // Cause of qr code or something else, imdbId contains double qotes in the URL. first and last characters are removed.
+    let request = `http://www.omdbapi.com/?i=${imdbId.substring(1).slice(0,-1)}&plot=full&apikey=69335388`;
+    console.log("MOVIE GETTER - request : ", request);
+    
+    let movieRequest$=this.httpClient.get(request);
 
-        // prevent scan to other URL that one for the API
-        if(data.Response === "False"){
-          reject(data.Error);
-        }
+    // Subscribe to the movie data
+    return movieRequest$.first().toPromise()
+    .then((data:any) => {
 
-        console.log("MOVIE GETTER - one movie found !", JSON.stringify(data));
-
-        // Make a movie object
-        let movie = new MovieComponent();
-        movie.imdbId = data["imdbID"];
-        movie.poster = data['Poster'];
-        movie.title = data['Title'];
-        movie.year = data['Year'];
-        movie.rated = data['Rated'];
-        movie.released = data['Released'];
-        movie.runtime = data['Runtime'];
-        movie.director = data['Director'];
-        movie.language = data['Language'];
-        movie.country = data['Country'];
-        movie.awards = data['Awards'];
-        movie.production = data['Production'];
-        movie.genre = data['Genre'];
-        movie.plot = data['Plot'];
-
-        // return it as a good response for the promise
-        resolve(movie)
-      },
-      err => {
-        reject(err);
-        console.error(JSON.stringify(err))
-      },
-      () => {
-        console.log('One Movie request Done')
+      // prevent scan to other URL that one for the API
+      if(data.Response === "False"){
+        return Promise.reject(data.Error);
       }
-      );
-    })
-   
-  }
 
+      console.log("MOVIE GETTER - one movie found !", JSON.stringify(data));
+
+      // Make a movie object
+      let movie = new MovieComponent();
+      movie.imdbId = data["imdbID"];
+      movie.poster = data['Poster'];
+      movie.title = data['Title'];
+      movie.year = data['Year'];
+      movie.rated = data['Rated'];
+      movie.released = data['Released'];
+      movie.runtime = data['Runtime'];
+      movie.director = data['Director'];
+      movie.language = data['Language'];
+      movie.country = data['Country'];
+      movie.awards = data['Awards'];
+      movie.production = data['Production'];
+      movie.genre = data['Genre'];
+      movie.plot = data['Plot'];
+
+      // return it as a good response for the promise
+      return Promise.resolve(movie);
+    })
+    .catch(
+      err => Promise.reject(err)
+    );   
+  }
 }
