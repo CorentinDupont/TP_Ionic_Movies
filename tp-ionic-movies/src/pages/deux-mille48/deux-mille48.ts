@@ -66,8 +66,8 @@ export class DeuxMille48Page {
 
   private initArray(){
     this.plateau.fill([{value:0, x:0, y:0}]);
-    let firestNbX = Math.floor(Math.random() * 3);
-    let firestNbY = Math.floor(Math.random() * 3);
+    let firestNbX = 1;
+    let firestNbY = 1;
     this.plateau[firestNbX][firestNbY].value = 2;
   }
 
