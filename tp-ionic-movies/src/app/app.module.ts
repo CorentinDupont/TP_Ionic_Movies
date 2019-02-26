@@ -4,13 +4,10 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MovieListPage } from '../pages/movie-list/movie-list';
 import { ShowMoviePage } from '../pages/show-movie/show-movie';
-import { Pictures } from '../pages/pictures/pictures';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -50,14 +47,11 @@ export class MyHammerConfig extends HammerGestureConfig  {
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
     HomePage,
     TabsPage,
     MovieListPage,
     MovieComponent,
     ShowMoviePage,
-    Pictures,
     FavoriteMoviesPage,
     FavMovieCardComponent,
     GetFirstGenrePipe,
@@ -74,13 +68,10 @@ export class MyHammerConfig extends HammerGestureConfig  {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
     HomePage,
     TabsPage,
     MovieListPage,
     ShowMoviePage,
-    Pictures,
     FavoriteMoviesPage,
     FavMovieCardComponent,
     DeuxMille48Page

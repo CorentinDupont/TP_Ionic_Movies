@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { combineLatest } from 'rxjs/observable/combineLatest';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/first';
+import settings from '../../config/settings';
 
 /*
   Generated class for the MovieGetterProvider provider.
@@ -17,24 +18,26 @@ import 'rxjs/add/operator/first';
 @Injectable()
 export class MovieGetterProvider {
 
-  public config;
+
+  private apiUrl:string = settings.movieApiUrl;
+  private apiKey:string = settings.movieApiKey;
+
   // movie list displayed in the movie-list page
   public moviesList=[];
 
-  constructor(public httpClient : HttpClient, private toastController: ToastController) {
+  constructor(public httpClient : HttpClient) {
     // Make a first search, and initialise page number
     this.getMovies("red", 1);
   }
 
   // Empty the movie list, and call API with search parameters
   getMovies(searchString, page, infiniteScroll = null) {
-    this.moviesList=[];
     this.addMovies(searchString, page, infiniteScroll = null);
   }
 
   // Search movie to fill the movie list, corresponding to a search string, and a page number, used with infinite scroll.
   addMovies(searchString, page, infiniteScroll = null){
-    let requestText = 'http://www.omdbapi.com/?s='+searchString+'*&page='+page+'&apikey=69335388';
+    let requestText = `${this.apiUrl}/?s='+searchString+'*&page='+page+'&apikey=${this.apiKey}`;
     var request$ = this.httpClient.get(requestText)
     console.log(requestText);
 
@@ -47,7 +50,7 @@ export class MovieGetterProvider {
           let subRequests$: Observable<any>[];
           subRequests$ = data.Search.map((movieSimple) =>{
             // Make a request movie by movie, to get all their data
-            let request = 'http://www.omdbapi.com/?i='+movieSimple.imdbID+'&plot=full&apikey=69335388';
+            let request = `${this.apiUrl}/?i='+movieSimple.imdbID+'&plot=full&apikey=${this.apiKey}`;
             return this.httpClient.get(request);
           });
 
@@ -58,6 +61,7 @@ export class MovieGetterProvider {
     }));
 
     combinedRequest$ && combinedRequest$.subscribe((movies: any) => {
+      this.moviesList = [];
       
       movies && movies.map(data => {  
         console.log(data['Genre'])
@@ -80,6 +84,7 @@ export class MovieGetterProvider {
         movie.plot = data['Plot']; 
 
         // Push the new constructed movie into the movie list
+        console.log('Ajout des films')
         this.moviesList.push(movie);
       });
       infiniteScroll && infiniteScroll.complete();
@@ -94,7 +99,7 @@ export class MovieGetterProvider {
     console.log("MOVIE GETTER - enter in promise", imdbId);
 
     // Cause of qr code or something else, imdbId contains double qotes in the URL. first and last characters are removed.
-    let request = `http://www.omdbapi.com/?i=${imdbId.substring(1).slice(0,-1)}&plot=full&apikey=69335388`;
+    let request = `${this.apiUrl}/?i=${imdbId.substring(1).slice(0,-1)}&plot=full&apikey=${this.apiKey}`;
     console.log("MOVIE GETTER - request : ", request);
     
     let movieRequest$=this.httpClient.get(request);
