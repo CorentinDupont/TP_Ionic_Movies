@@ -47,6 +47,7 @@ export class MovieListPage {
 
   // Search Bar Event - When new key is pressed
   onChange(event: any) {
+    console.log("Bonsoir")
     if(this.hasInternetConnection()){
       // Modifiy search paramaters and call movie provider to get new
       this.page = 1;
