@@ -28,7 +28,7 @@ export class MovieComponent {
   public poster: string;
   public plot: string;
 
-  constructor() {
+  constructor({id:string}) {
 
   }
 

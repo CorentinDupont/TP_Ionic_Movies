@@ -18,6 +18,7 @@
 
   <!-- Search bar block -->
   <div class="search-bar-block">
+    <!-- FIX ME --- add time between search (see  the doc) -->
     <ion-searchbar (keyup)="onKey($event)"></ion-searchbar>
     <button ion-button clear icon-only (click)="scanCode()">
       <ion-icon name="qr-scanner" color="primary"></ion-icon>
@@ -45,7 +46,7 @@
 
         <!-- One card -->
         <ion-card (click)="showMovie(movie)" class="movie-card">
-          <img src={{movie.poster}}/>
+          <img [src]="movie.poster"/>
           <ion-card-content>
             <p class="card-title">
               {{movie.title}}
