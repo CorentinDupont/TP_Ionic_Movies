@@ -65,9 +65,13 @@ export class DeuxMille48Page {
   }
 
   private initArray(){
-    this.plateau.fill([{value:0, x:0, y:0}]);
-    let firestNbX = 1;
-    let firestNbY = 1;
+    this.plateau[0].fill({value:0, x:0, y:0});
+    this.plateau[1].fill({value:0, x:0, y:0});
+    this.plateau[2].fill({value:0, x:0, y:0});
+    this.plateau[3].fill({value:0, x:0, y:0});
+
+    let firestNbX = Math.floor(Math.random()*4);
+    let firestNbY = Math.floor(Math.random()*4);
     this.plateau[firestNbX][firestNbY].value = 2;
   }
 
@@ -174,7 +178,7 @@ export class DeuxMille48Page {
     let l;
     for(j=0;j<4;++j){
       for(l=0;l<4;++l){
-        this.plateau[j][l].value=0;
+        this.plateau[j][l]={value: 0, x:0, y:0};
       }
     }
     this.plateau[1][1].value==2;
