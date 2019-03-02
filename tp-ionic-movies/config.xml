@@ -3,7 +3,7 @@
     <name>Movee</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://10.44.0.35:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -91,6 +91,7 @@
     <allow-navigation href="http://192.168.1.34:8100" sessionid="d7e76394" />
     <plugin name="cordova-plugin-network-information" spec="2.0.1" />
     <allow-navigation href="http://10.44.0.35:8100" />
+    <allow-navigation href="http://10.44.2.224:8100" />
     <engine name="android" spec="7.1.4" />
     <engine name="ios" spec="4.5.5" />
 </widget>
