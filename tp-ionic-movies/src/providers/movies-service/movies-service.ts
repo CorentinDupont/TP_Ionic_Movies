@@ -94,7 +94,9 @@ export class MoviesServiceProvider {
 
   // Select one movie from database by imdbId
   select(imdbId: string){
-    let sql = 'SELECT * FROM movies WHERE imdbId=?'
+    let sql = 'SELECT * FROM movies WHERE imdbId=?';
+
+    console.log(this.db);
 
     return new Promise<MovieComponent[]>((resolve, reject) => {
       console.log("MOVIES : select by imdbId : enter in promise", imdbId)
