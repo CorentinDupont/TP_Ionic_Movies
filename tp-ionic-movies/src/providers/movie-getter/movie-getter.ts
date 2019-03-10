@@ -84,6 +84,7 @@ export class MovieGetterProvider {
         movie.plot = data['Plot']; 
 
         // Push the new constructed movie into the movie list
+        console.log('Ajout des films')
         this.moviesList.push(movie);
       });
       infiniteScroll && infiniteScroll.complete();

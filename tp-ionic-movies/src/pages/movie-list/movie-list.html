@@ -18,7 +18,11 @@
 
   <!-- Search bar block -->
   <div class="search-bar-block">
+<<<<<<< 376510a837801cad038cfb104c848c02e98f8bbd
     <ion-searchbar (ionChange)="onChange($event)" debounce="1000"></ion-searchbar>
+=======
+    <ion-searchbar (ionInput)="onChange($event)" debounce="1000"></ion-searchbar>
+>>>>>>> Correct the ion searchbar
     <button ion-button clear icon-only (click)="scanCode()">
       <ion-icon name="qr-scanner" color="primary"></ion-icon>
     </button>

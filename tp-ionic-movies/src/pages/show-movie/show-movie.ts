@@ -1,7 +1,8 @@
-import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer2, HostListener } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MovieComponent } from '../../components/movie/movie';
 import { MoviesServiceProvider } from '../../providers/movies-service/movies-service';
+import { DefaultKeyValueDiffer } from '@angular/core/src/change_detection/differs/default_keyvalue_differ';
 
 /**
  * Generated class for the ShowMoviePage page.
@@ -47,15 +48,13 @@ export class ShowMoviePage {
 
   }
 
-  // Ionic Life Cycle Event - When page is show
-  ionViewDidEnter(){
-    // test if it's not a fav movie when user came from search movie list
-    !this.isAFavMovie && this.testIfMovieIsAlreadyInFavorite(this.movie);
-    this.createCode(this.movie);
-
+  @HostListener('window:scroll', ['$event']) 
+  dotheJob(event) {
+    console.log(event)
     /**
      * MANAGE MOVIE POSTER PARALLAX
      */
+    /*
     let previousScroll = 0;
     let scrollHeight = 0
     let difference = 0
@@ -63,7 +62,8 @@ export class ShowMoviePage {
     console.log("#######")
     console.log(this.parallaxContainer.nativeElement.style);
     
-    this.parallaxContainer.nativeElement.addEventListener('scroll', function(){
+    this.parallaxContainer.nativeElement.addEventListener('scroll', () => {
+      console.log("test");
       let scroll = this.parallaxContainer.nativeElement.scrollTop;
       difference = previousScroll - scroll
       previousScroll = scroll;
@@ -79,6 +79,20 @@ export class ShowMoviePage {
       parallax.style.top = scrollHeight.toString() + "px" ;
     
     })
+    */
+  }
+  track(value: number): void {
+    console.log("BONJOUR");
+    console.log(value);
+  }
+
+  // Ionic Life Cycle Event - When page is show
+  ionViewDidEnter(){
+    // test if it's not a fav movie when user came from search movie list
+    !this.isAFavMovie && this.testIfMovieIsAlreadyInFavorite(this.movie);
+    this.createCode(this.movie);
+
+    
   }
 
   // Function called by the favorite button on click
