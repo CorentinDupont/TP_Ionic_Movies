@@ -18,7 +18,7 @@
 
   <!-- Search bar block -->
   <div class="search-bar-block">
-    <ion-searchbar (ionInput)="onChange($event)" debounce="1000"></ion-searchbar>
+    <ion-searchbar (ionChange)="onChange($event)" debounce="1000"></ion-searchbar>
     <button ion-button clear icon-only (click)="scanCode()">
       <ion-icon name="qr-scanner" color="primary"></ion-icon>
     </button>
