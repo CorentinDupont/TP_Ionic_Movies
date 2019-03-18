@@ -32,7 +32,6 @@ export class MovieGetterProvider {
 
   // Empty the movie list, and call API with search parameters
   getMovies(searchString, page, infiniteScroll = null) {
-    this.moviesList=[];
     this.addMovies(searchString, page, infiniteScroll = null);
   }
 
@@ -62,6 +61,7 @@ export class MovieGetterProvider {
     }));
 
     combinedRequest$ && combinedRequest$.subscribe((movies: any) => {
+      this.moviesList = [];
       
       movies && movies.map(data => {  
         console.log(data['Genre'])
