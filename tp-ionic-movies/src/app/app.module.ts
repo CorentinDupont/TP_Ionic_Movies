@@ -19,6 +19,7 @@ import { SQLite } from '@ionic-native/sqlite';
 import { MoviesServiceProvider } from '../providers/movies-service/movies-service';
 import { FavoriteMoviesPage } from '../pages/favorite-movies/favorite-movies';
 import { FavMovieCardComponent } from '../components/fav-movie-card/fav-movie-card'
+import { LoadingComponent } from '../components/loading/loading'
 
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
@@ -54,6 +55,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     ShowMoviePage,
     FavoriteMoviesPage,
     FavMovieCardComponent,
+    LoadingComponent,
     GetFirstGenrePipe,
     DeuxMille48Page
   ],
@@ -74,6 +76,7 @@ export class MyHammerConfig extends HammerGestureConfig  {
     ShowMoviePage,
     FavoriteMoviesPage,
     FavMovieCardComponent,
+    LoadingComponent,
     DeuxMille48Page
   ],
   providers: [
