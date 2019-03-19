@@ -4,7 +4,6 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 
-import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { MovieListPage } from '../pages/movie-list/movie-list';
 import { ShowMoviePage } from '../pages/show-movie/show-movie';
@@ -48,7 +47,6 @@ export class MyHammerConfig extends HammerGestureConfig  {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     TabsPage,
     MovieListPage,
     MovieComponent,
@@ -70,7 +68,6 @@ export class MyHammerConfig extends HammerGestureConfig  {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     TabsPage,
     MovieListPage,
     ShowMoviePage,

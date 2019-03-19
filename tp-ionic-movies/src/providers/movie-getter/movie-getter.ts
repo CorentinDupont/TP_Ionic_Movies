@@ -35,6 +35,7 @@ export class MovieGetterProvider {
   // Empty the movie list, and call API with search parameters
   getMovies(searchString, page, infiniteScroll = null) {
     this.isLoading = true;
+    this.moviesList = [];
     this.addMovies(searchString, page, infiniteScroll = null);
   }
 

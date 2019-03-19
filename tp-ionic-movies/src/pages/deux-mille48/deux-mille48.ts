@@ -16,17 +16,15 @@ export class DeuxMille48Page {
    * Starting board
    */
   plateau = [
-    [ {value:0, x:0, y:0}, {value:0, x:0, y:0}, {value:0, x:0, y:0}, {value:0, x:0, y:0}],
-    [ {value:0, x:0, y:0}, {value:0, x:0, y:0}, {value:0, x:0, y:0}, {value:0, x:0, y:0}],
-    [ {value:0, x:0, y:0}, {value:0, x:0, y:0}, {value:0, x:0, y:0}, {value:0, x:0, y:0}],
-    [ {value:0, x:0, y:0}, {value:0, x:0, y:0}, {value:0, x:0, y:0}, {value:0, x:0, y:0}]
+    [ 0, 0, 0, 0],
+    [ 0, 0, 0, 0],
+    [ 0, 2, 0, 0],
+    [ 0, 0, 0, 0]
   ];
   /** starting score */
   score = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private alertCtrl: AlertController) {
-    this.initArray();
-    this.score = 0;
   }
 
   ionViewDidLoad() {
@@ -50,29 +48,17 @@ export class DeuxMille48Page {
     }
     // looping 10X game event
     if( (dx!=0 || dy!=0) && (dx==0 || dy==0) ){
-      
+      let canPop= false;
       let loopGame = 0;
-      let haveFusion = false;
       for(loopGame=0;loopGame<10;loopGame++){
-        this.setGravity(dx,dy);
-        haveFusion= this.fusionCase(dx,dy)? true : haveFusion;
+        if(this.setGravity(dx,dy) || this.fusionCase(dx,dy)){
+          canPop = true;
+        }
       }
       // pop a random 2 in board
-      if(haveFusion){
+      if(canPop)
         this.popRand2();
-      }
     }
-  }
-
-  private initArray(){
-    this.plateau[0].fill({value:0, x:0, y:0});
-    this.plateau[1].fill({value:0, x:0, y:0});
-    this.plateau[2].fill({value:0, x:0, y:0});
-    this.plateau[3].fill({value:0, x:0, y:0});
-
-    let firestNbX = Math.floor(Math.random()*4);
-    let firestNbY = Math.floor(Math.random()*4);
-    this.plateau[firestNbX][firestNbY].value = 2;
   }
 
   /**
@@ -81,7 +67,7 @@ export class DeuxMille48Page {
    * @param dy  direction y
    */
   private fusionCase(dx,dy){
-    let haveFusion = false;
+    let blocFusion = false;
     let x,y;
     for(y=0;y<4;++y){
       for(x=0;x<4;++x){
@@ -89,16 +75,16 @@ export class DeuxMille48Page {
         let y2 = y+dy;
         if(x2 >= 0 && x2 < 4 &&  y2 >= 0 && y2 < 4)
         {
-          if(this.plateau[x][y].value == this.plateau[x2][y2].value){
-            this.score+=this.plateau[x][y].value
-            this.plateau[x][y].value = 0;
-            this.plateau[x2][y2].value *=2;
-            haveFusion = true;
+          if(this.plateau[x][y] == this.plateau[x2][y2]){
+            this.score+=this.plateau[x][y]
+            this.plateau[x][y] = 0;
+            this.plateau[x2][y2] *=2;3
+            blocFusion = true;
           }
         }
       }
     }
-    return haveFusion;
+    return blocFusion;
   }
   /**
    * Move all number to swip direction
@@ -106,23 +92,23 @@ export class DeuxMille48Page {
    * @param dy direction y
    */
   private setGravity(dx, dy){
+    let blocMoving = false;
     let nbLoop = 0;
     let x,y;
     for(nbLoop=0; nbLoop<4; nbLoop++){
       for(y=0; y<4; y++){
         for( x=0; x<4; x++){
           if(x+dx>=0 && x+dx<4 && y+dy >=0 && y+dy <4){
-            if(this.plateau[x][y].value!=0 && this.plateau[x+dx][y+dy].value==0){
-              this.plateau[x][y].x += 50*dx;
-              this.plateau[x][y].y += 50*dy;
-              this.plateau[x+dx][y+dy].value = this.plateau[x][y].value;
-              this.plateau[x][y].value = 0;
-              this.resetAllAnimation();
+            if(this.plateau[x][y]!=0 && this.plateau[x+dx][y+dy]==0){
+              this.plateau[x+dx][y+dy] = this.plateau[x][y];
+              this.plateau[x][y] = 0;
+              blocMoving = true;
             }
           }
         }
       }
     }
+    return blocMoving;
   }
 
   /**
@@ -133,8 +119,8 @@ export class DeuxMille48Page {
       while(1){
         let x = Math.floor((Math.random() * 4));
         let y = Math.floor((Math.random() * 4));
-        if(this.plateau[y][x].value==0){
-          this.plateau[y][x].value = Math.floor(Math.random() * 2)*2;
+        if(this.plateau[y][x]==0){
+          this.plateau[y][x] = 2;
           break;
         }
       }
@@ -151,23 +137,12 @@ export class DeuxMille48Page {
     let l;
     for(j=0;j<4;++j){
       for(l=0;l<4;++l){
-        if(this.plateau[j][l].value==0){
+        if(this.plateau[j][l]==0){
           return false;
         }
       }
     }
     return true;
-  }
-
-  private resetAllAnimation()
-  {
-    let j=0,l=0;
-    for(j=0;j<4;++j){
-      for(l=0;l<4;++l){
-        this.plateau[j][l].x=0;
-        this.plateau[j][l].y=0;
-      }
-    }
   }
 
   /**
@@ -178,10 +153,10 @@ export class DeuxMille48Page {
     let l;
     for(j=0;j<4;++j){
       for(l=0;l<4;++l){
-        this.plateau[j][l]={value: 0, x:0, y:0};
+        this.plateau[j][l]=0;
       }
     }
-    this.plateau[1][1].value==2;
+    this.plateau[1][1]==2;
 
     let alert = this.alertCtrl.create({
       title: 'Game Over',

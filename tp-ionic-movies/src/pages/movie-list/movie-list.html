@@ -25,7 +25,7 @@
   </div>
   
   <!-- Error display block -->
-  <span *ngIf="movieGetter.moviesList.length == 0">
+  <span *ngIf="movieGetter.moviesList.length == 0 && !movieGetter.isLoading">
     <ion-card>
       <ion-card-title class="custom-ion-card-title">Erreur</ion-card-title>
       <ion-card-content>
